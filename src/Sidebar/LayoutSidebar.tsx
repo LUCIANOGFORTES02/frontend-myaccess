@@ -15,6 +15,7 @@ export function LayoutSidebar({children,}: {children?: React.ReactNode;}) {
       style={{
         "--sidebar-width": "12rem",
         "--sidebar-width-mobile": "10rem",
+        "--sidebar-width-icon":"4rem"
       } as any}
       >
         <AppSidebar  />
@@ -25,7 +26,7 @@ export function LayoutSidebar({children,}: {children?: React.ReactNode;}) {
                 {children}
               </main>
           </SidebarInset>
-
     </SidebarProvider>
   )
 }
+ 

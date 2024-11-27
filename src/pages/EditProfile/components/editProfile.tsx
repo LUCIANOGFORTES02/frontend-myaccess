@@ -60,11 +60,10 @@ export function EditProfile() {
 
 
   return (
-    <div className="flex flex-1 flex-col p-4 transition-all duration-300" 
-      >
-      <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
+    <div className="flex flex-1 flex-col p-4" >
+      <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6 items-start ">
         {/* Card do Usuário */}
-        <div className="flex flex-col items-center p-6 rounded-lg shadow-lg "  
+        <div className="col-span-1 flex flex-col items-center p-6 rounded-lg shadow-lg"  
           style={{ backgroundColor: '#21222D' }}
           >
           <Avatar className="w-32 h-32" >
@@ -75,14 +74,15 @@ export function EditProfile() {
           </Avatar>
           <h3 className="text-xl font-semibold mt-4">@User-Name</h3>
           <p className="text-sm text-foreground">user@email.com</p>
-          <button className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-green-500">
+          <button className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-green-600">
             Editar
           </button>
         </div>
 
         {/* Formulário de Edição */}
-        <div className="flex flex-col p-6 rounded-lg shadow-lg" style={{ backgroundColor: '#21222D' }}>
-          <h3 className="text-lg font-semibold mb-4">Configurações do usuário</h3>
+        <div className="col-span-2 p-6 rounded-lg shadow-lg" 
+          style={{ backgroundColor: '#21222D' }}>
+          <h3 className="text-lg font-semibold mb-6">Configurações do usuário</h3>
 
           {/* Detalhes do Usuário */}
           <section className="mb-6">
@@ -109,14 +109,14 @@ export function EditProfile() {
                 name='email'
                 value={userDetails.email}
                 onChange={handleDetailsChange}
-                className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+                className="md:col-span-2 w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
               />
             
               <div className="col-span-full">
                 <button
                   type="button"
                   onClick={handleSaveDetails}
-                  className="px-4 py-2 bg-primary text-white rounded-md hover:bg-green-500"
+                  className="px-4 py-2 bg-primary text-white rounded-md hover:bg-green-600"
                 >
                   Salvar Alterações
                 </button>

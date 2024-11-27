@@ -1,4 +1,4 @@
-import {LayoutSidebar} from "../Home/components/LayoutSidebar";
+import {LayoutSidebar} from "../../Sidebar/LayoutSidebar";
 import {EditProfile} from "./components/editProfile";
 
 export default function EditProfilePage() {

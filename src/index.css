@@ -7,7 +7,8 @@
     --background: 234 17% 10%;
     --primary: 158 100% 36%;
     --border: 0 0% 15%;
-    --foreground: 0 0% 60%
+    --foreground: 0 0% 60%;
+    --radius: 0.5rem;
   ;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -30,9 +31,9 @@
 
 @layer base {
  
-  /* * {
+  * {
     @apply border-border;
-  } */
+  }
   body {
     @apply bg-background text-foreground h-full;
   }
@@ -41,11 +42,5 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
+
+

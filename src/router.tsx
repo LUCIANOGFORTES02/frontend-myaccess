@@ -1,6 +1,6 @@
 import {Routes,Route} from 'react-router-dom'
 import Login from './pages/Login/Login'
-import DashboardPage from './pages/Home/Dashboard'
+import DashboardPage from './pages/Home/page'
 import EditProfilePage from './pages/EditProfile/page'
 import ImagePage from './pages/Gerenciador de Imagens/page'
 
