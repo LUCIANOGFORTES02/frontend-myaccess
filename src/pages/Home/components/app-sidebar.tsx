@@ -1,4 +1,4 @@
-import { FileVideo , Home, FileAudio , Images ,LogOut,  } from "lucide-react"
+import { FileVideo , Home, FileAudio , Images } from "lucide-react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -11,7 +11,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSkeleton,
 } from "@/components/ui/sidebar"
 import { Link } from "react-router-dom"
 
@@ -61,9 +60,7 @@ export function AppSidebar() {
             <span className="text-[1rem] font-semibold ">Gabriel Augusto</span>
           </div>
 
-          <button className="pl-6 text-foreground hover:text-foreground">
-            <LogOut  className="w-5 h-5" />
-          </button>
+       
         
         </div>
         <Separator className="border-t border-gray-700 w-[calc(100%-0.50rem)] 

@@ -1,13 +1,15 @@
 import { Avatar } from '@/components/ui/avatar';
 import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import React, { useState } from 'react'
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-export function EditProfile({ open }: { open: boolean }) {
+export function EditProfile() {
 
   const [userDetails, setUserDetails] = useState({
-    firstName: "Pepito",
-    lastName: "Rodrick",
-    email: "pepito.sifuentes@uni.pe",
+    firstName: "",
+    lastName: "",
+    email: "",
   });
 
   const [passwords, setPasswords] = useState({
@@ -22,6 +24,11 @@ export function EditProfile({ open }: { open: boolean }) {
     const { name, value } = e.target;
     setUserDetails({ ...userDetails, [name]: value });
   };
+  // Função para atualizar a senha
+  const handlePasswordsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setPasswords({ ...passwords, [name]: value });
+  };
 
   // Função para salvar as alterações
   const handleSaveDetails = () => {
@@ -30,114 +37,148 @@ export function EditProfile({ open }: { open: boolean }) {
 
   // Função para salvar a senha
   const handleSavePassword = () => {
-    if (passwords.newPassword !== passwords.confirmPassword) {
-      alert("Passwords do not match!");
+    const {currentPassword,newPassword,confirmPassword,confirmNewPassword} = passwords
+    console.log("Current",currentPassword)
+    console.log("New",newPassword)
+    console.log("Confirm",confirmPassword)
+    console.log("ConfirmNew",confirmNewPassword)
+
+    if (!currentPassword || newPassword !== confirmNewPassword || 
+      currentPassword!== confirmPassword
+      ) {
+      toast.error('Preencha os campos corretamente.',{
+        position: "top-right",
+        theme: "dark",
+    })
       return;
-    }
+    }  
+      toast.success('Senha alterada')
+
     console.log("Password changed:", passwords);
   };
-  
-  // const [open, setOpen] = useState(true); // Estado do Sidebar
 
 
 
   return (
-    <div className={`transition-all duration-300 ${
-      open ? "w-[calc(100%-14rem)]" : "w-[calc(100%-3rem)]"
-      } mx-auto p-6 rounded-lg`}
+    <div className="flex flex-1 flex-col p-4 transition-all duration-300" 
       >
-      {/* Card do Usuário */}
-      <div className="flex flex-col items-center p-6 rounded-lg shadow-lg "  
-        style={{ backgroundColor: '#21222D' }}
-        >
-        <Avatar className="w-32 h-32" >
-          <AvatarImage 
-            src="https://github.com/shadcn.png"
-            />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-        <h3 className="text-xl font-semibold">@User-Name</h3>
-        <p className="text-sm text-gray-400">user@email.com</p>
-        <button className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-green-500">
-          Editar
-        </button>
+      <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min">
+        {/* Card do Usuário */}
+        <div className="flex flex-col items-center p-6 rounded-lg shadow-lg "  
+          style={{ backgroundColor: '#21222D' }}
+          >
+          <Avatar className="w-32 h-32" >
+            <AvatarImage 
+              src="https://github.com/shadcn.png"
+              />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <h3 className="text-xl font-semibold mt-4">@User-Name</h3>
+          <p className="text-sm text-foreground">user@email.com</p>
+          <button className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-green-500">
+            Editar
+          </button>
+        </div>
+
+        {/* Formulário de Edição */}
+        <div className="flex flex-col p-6 rounded-lg shadow-lg" style={{ backgroundColor: '#21222D' }}>
+          <h3 className="text-lg font-semibold mb-4">Configurações do usuário</h3>
+
+          {/* Detalhes do Usuário */}
+          <section className="mb-6">
+            <h4 className="text-md font-medium mb-2">Detalhes</h4>
+            <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="Primeiro nome"
+                name='firstName'
+                value={userDetails.firstName}
+                onChange={handleDetailsChange}
+                className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+              />
+              <input
+                type="text"
+                placeholder="Sobrenome"
+                name='lastName'
+                value={userDetails.lastName}
+                className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                name='email'
+                value={userDetails.email}
+                onChange={handleDetailsChange}
+                className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+              />
+            
+              <div className="col-span-full">
+                <button
+                  type="button"
+                  onClick={handleSaveDetails}
+                  className="px-4 py-2 bg-primary text-white rounded-md hover:bg-green-500"
+                >
+                  Salvar Alterações
+                </button>
+              </div>
+            </form>
+          </section>
+
+          {/* Alteração de Senha */}
+          <section>
+            <h4 className="text-md font-medium mb-2">Alteração de Senha</h4>
+            <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="password"
+                placeholder="Senha atual"
+                name='currentPassword'
+                value={passwords.currentPassword}
+                onChange={handlePasswordsChange}
+                className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+                
+              />
+              <input
+                type="password"
+                placeholder="Confirmar senha"
+                name='confirmPassword'
+                value={passwords.confirmPassword}
+                onChange={handlePasswordsChange}
+                className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+                
+              />
+              <input
+                type="password"
+                placeholder="Senha nova"
+                name='newPassword'
+                value={passwords.newPassword}
+                onChange={handlePasswordsChange}
+                className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+                
+              />
+              <input
+                type="password"
+                placeholder="Confirmar senha nova"
+                name='confirmNewPassword'
+                value={passwords.confirmNewPassword}
+                onChange={handlePasswordsChange}
+                className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+                
+
+              />
+              <div className="col-span-full">
+                <button
+                  type="button"
+                  onClick={handleSavePassword}
+                  className="px-4 py-2 bg-primary text-white rounded-md hover:bg-green-500"
+                >
+                  Alterar Senha
+                </button>
+              </div>
+            </form>
+          </section>
+        </div>
       </div>
-
-      {/* Formulário de Edição */}
-      <div className="flex-1 p-6 rounded-lg shadow-lg" style={{ backgroundColor: '#21222D' }}>
-        <h3 className="text-lg font-semibold mb-4">Configurações do usuário</h3>
-
-        {/* Detalhes do Usuário */}
-        <section className="mb-6">
-          <h4 className="text-md font-medium mb-2">Detalhes</h4>
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              placeholder="Primeiro nome"
-              className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
-            />
-            <input
-              type="text"
-              placeholder="Sobrenome"
-              className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
-            />
-          
-            <div className="col-span-full">
-              <button
-                type="button"
-                className="px-4 py-2 bg-primary text-white rounded-md hover:bg-green-500"
-              >
-                Salvar
-              </button>
-            </div>
-          </form>
-        </section>
-
-        {/* Alteração de Senha */}
-        <section>
-          <h4 className="text-md font-medium mb-2">Senha</h4>
-          <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="password"
-              placeholder="Senha atual"
-              className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
-              value={passwords.currentPassword}
-            />
-            <input
-              type="password"
-              placeholder="Confirmar senha"
-              className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
-              value={passwords.confirmPassword}
-            />
-            <input
-              type="password"
-              placeholder="Senha nova"
-              className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
-              value={passwords.newPassword}
-            />
-            <input
-              type="password"
-              placeholder="Confirmar senha nova"
-              className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
-              value={passwords.confirmNewPassword}
-
-            />
-            <div className="col-span-full">
-              <button
-                type="button"
-                className="px-4 py-2 bg-primary text-white rounded-md hover:bg-green-500"
-              >
-                Salvar
-              </button>
-            </div>
-          </form>
-        </section>
-      </div>
+      <ToastContainer />
     </div>
   
   )
