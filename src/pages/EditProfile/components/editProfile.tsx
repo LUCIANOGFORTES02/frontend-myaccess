@@ -60,7 +60,7 @@ export function EditProfile() {
 
 
   return (
-    <div className="flex flex-1 flex-col p-4" >
+    <div className="flex flex-1 flex-col p-4 h-screen" >
       <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6 items-start ">
         {/* Card do Usuário */}
         <div className="col-span-1 flex flex-col items-center p-6 rounded-lg shadow-lg"  
