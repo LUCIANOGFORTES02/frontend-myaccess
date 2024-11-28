@@ -1,5 +1,5 @@
 // import Header from "@/components/ui/Header";
-import PageTitle from "@/components/PageTitle";
+import PageTitle from "@/components/ui/PageTitle";
 import {LayoutSidebar} from "../../Sidebar/LayoutSidebar";
 import {Dashboard} from "./components/Dashboard";
 import { House  } from 'lucide-react';

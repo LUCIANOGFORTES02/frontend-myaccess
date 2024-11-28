@@ -1,4 +1,4 @@
-import PageTitle from "@/components/PageTitle";
+import PageTitle from "@/components/ui/PageTitle";
 import {LayoutSidebar} from "../../Sidebar/LayoutSidebar";
 import {EditProfile} from "./components/editProfile";
 import { UserPen } from 'lucide-react';
