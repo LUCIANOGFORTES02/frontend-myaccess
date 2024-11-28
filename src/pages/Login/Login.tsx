@@ -69,24 +69,24 @@ return (
            </div>
             
                   {showSignup &&(
-                  <input className="w-full bg-transparent border-b text-foreground focus:outline-none focus:border-primary block text-xl mb-2" 
+                  <input className="w-full bg-transparent border-b text-foreground focus:outline-none focus:border-primary block text-xl mb-3" 
                     type="text" placeholder='Nome' value={username} onChange={e=> setUsername(e.target.value)} 
                   />
                   )}
-                  <input className="w-full bg-transparent border-b  text-foreground focus:outline-none focus:border-primary block text-xl mb-2" 
+                  <input className="w-full bg-transparent border-b  text-foreground focus:outline-none focus:border-primary block text-xl mb-3" 
                     type="email" placeholder='Email' value={email}  onChange={e=> setEmail(e.target.value)}
                   />
-                  <input className="w-full bg-transparent border-b text-foreground focus:outline-none focus:border-primary block text-xl mb-2" 
+                  <input className="w-full bg-transparent border-b text-foreground focus:outline-none focus:border-primary block text-xl mb-3" 
                     type="password" placeholder='Senha'value={password}  onChange={e=> setPassword(e.target.value)}
                   />
                   {showSignup &&(
-                  <input className="w-full bg-transparent border-b  text-foreground focus:outline-none focus:border-primary block text-xl mb-2" 
+                  <input className="w-full bg-transparent border-b  text-foreground focus:outline-none focus:border-primary block text-xl mb-3" 
                     type="password" placeholder='Confirme a Senha' value={confirmpassword} onChange={e=> setConfirmpassword(e.target.value)} 
                   />
                   )}
         
-           {showSignup ? <button className=" w-full bg-primary py-1 px-4 text-white" onClick={handleCadastrar} >Registrar</button> : 
-              <button className=" w-full mt-2 bg-primary py-1 px-4  text-white" onClick={handleLogin} >login</button>
+           {showSignup ? <button className=" w-full bg-primary py-1 px-4 text-foreground" onClick={handleCadastrar} >Registrar</button> : 
+              <button className=" w-full mt-2 bg-primary py-1 px-4  text-foreground" onClick={handleLogin} >login</button>
            }
 
            <a className="mt-3" href="#" onClick={handleTelaCadastro}>

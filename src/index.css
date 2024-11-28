@@ -4,12 +4,21 @@
 
 @layer base {
   :root {
-    --background: 234 17% 10%;
-    --primary: 158 100% 36%;
+    --background: 240 22% 15%;
+    --foreground: 0 0% 100%;/*Texto principal*/
+
+    --primary: 147, 67%, 47%;
+     --primary-foreground: 0, 0%, 20%;/* Cor mais escura para colocar no stat*/
+
+    --secondary: 240 14% 73%;
+
     --border: 0 0% 15%;
-    --foreground: 0 0% 60%;
     --radius: 0.5rem;
-  ;
+
+    --accent: 0 0% 9%;
+    --accent-foreground: 0 0% 100%;
+  
+    --sidebar-hover: 240 10% 20%;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -17,7 +26,8 @@
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%}
+    --sidebar-ring: 217.2 91.2% 59.8%
+  }
   .dark {
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -26,7 +36,8 @@
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%}
+    --sidebar-ring: 217.2 91.2% 59.8%
+  }
 }
 
 @layer base {

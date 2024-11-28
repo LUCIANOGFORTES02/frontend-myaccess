@@ -58,14 +58,24 @@ export default {
   				accent: 'hsl(var(--sidebar-accent))',
   				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
   				border: 'hsl(var(--sidebar-border))',
-  				ring: 'hsl(var(--sidebar-ring))'
+  				ring: 'hsl(var(--sidebar-ring))',
+				hover:'hsl(var(--sidebar-hover))'
   			}
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+		  fontFamily: {
+			sans: ['Poppins', 'sans-serif'], // Define "Poppins" como padrão
+		  },
+		  boxShadow: {
+			// Certifique-se de não sobrescrever os valores padrão
+			md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+			sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+			lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)'
+		  },
   	}
   },
   plugins: [require("tailwindcss-animate")],

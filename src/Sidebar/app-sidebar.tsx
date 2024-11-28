@@ -53,9 +53,9 @@ export function AppSidebar() {
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
                     size="lg"
-                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground hover:bg-slate-400"
+                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground hover:bg-sidebar-hover"
                     >
-                    <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                    <div className="flex aspect-square size-8 items-center justify-center rounded-lg ">
                       <Link to={'/editprofile'}>
                         <Avatar className="w-10 h-10" >
                           <AvatarImage 
@@ -66,10 +66,12 @@ export function AppSidebar() {
                       </Link>
                     </div>
                   {/* Saudação ao usuário */}
+                  <a href="/editprofile">
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold">Hello 👋</span>
-                      <span className="truncate text-xs">Gabriel Augusto</span>
+                      <span className="truncate font-semibold text-foreground">Hello 👋</span>
+                      <span className="truncate text-xs text-foreground">Gabriel Augusto</span>
                     </div>
+                  </a>
                   </SidebarMenuButton>
                 </DropdownMenuTrigger>
               </DropdownMenu>
@@ -82,18 +84,18 @@ export function AppSidebar() {
           />
       </SidebarHeader>
     
-      <SidebarContent className="bg-background text-white">
+      <SidebarContent className="bg-background text-foreground">
         <SidebarGroup className="">
-          <SidebarGroupLabel className=" text-white text-sm ">Menu</SidebarGroupLabel>
+          <SidebarGroupLabel className=" text-foreground text-sm ">Menu</SidebarGroupLabel>
             <SidebarGroupContent>
               {/* Itens do menu */}
               <SidebarMenu >
                 {items.map((item) => (
                   <SidebarMenuItem key={item.title}  >
-                    <SidebarMenuButton asChild className="hover:bg-slate-400"  >
-                      <a href={item.url}>
-                        <item.icon />
-                        <span  className="text-sm " >{item.title}</span>
+                    <SidebarMenuButton asChild className="hover:bg-sidebar-hover"  >
+                      <a  href={item.url}>
+                        <item.icon className="text-foreground" />
+                        <span  className="text-sm text-foreground" >{item.title}</span>
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

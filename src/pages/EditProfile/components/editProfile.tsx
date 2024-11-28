@@ -66,7 +66,7 @@ export function EditProfile() {
         <div className="col-span-1 flex flex-col items-center p-6 rounded-lg shadow-lg"  
           style={{ backgroundColor: '#21222D' }}
           >
-          <Avatar className="w-32 h-32" >
+          <Avatar className="border-4 border-accent shadow-lg w-32 h-32" >
             <AvatarImage 
               src="https://github.com/shadcn.png"
               />
@@ -74,7 +74,7 @@ export function EditProfile() {
           </Avatar>
           <h3 className="text-xl font-semibold mt-4">@User-Name</h3>
           <p className="text-sm text-foreground">user@email.com</p>
-          <button className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-green-600">
+          <button className="mt-4 px-4 py-2 bg-primary text-foreground rounded-md hover:bg-green-600">
             Editar
           </button>
         </div>
@@ -82,11 +82,11 @@ export function EditProfile() {
         {/* Formulário de Edição */}
         <div className="col-span-2 p-6 rounded-lg shadow-lg" 
           style={{ backgroundColor: '#21222D' }}>
-          <h3 className="text-lg font-semibold mb-6">Configurações do usuário</h3>
+          <h1 className="text-2xl font-bold mb-6">Configurações do usuário</h1>
 
           {/* Detalhes do Usuário */}
           <section className="mb-6">
-            <h4 className="text-md font-medium mb-2">Detalhes</h4>
+            <h4 className="text-lg font-medium mb-2">Detalhes</h4>
             <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="text"
@@ -94,14 +94,15 @@ export function EditProfile() {
                 name='firstName'
                 value={userDetails.firstName}
                 onChange={handleDetailsChange}
-                className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+                className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
               />
               <input
                 type="text"
                 placeholder="Sobrenome"
                 name='lastName'
                 value={userDetails.lastName}
-                className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+                onChange={handleDetailsChange}
+                className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
               />
               <input
                 type="email"
@@ -109,14 +110,14 @@ export function EditProfile() {
                 name='email'
                 value={userDetails.email}
                 onChange={handleDetailsChange}
-                className="md:col-span-2 w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+                className="md:col-span-2 w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
               />
             
               <div className="col-span-full">
                 <button
                   type="button"
                   onClick={handleSaveDetails}
-                  className="px-4 py-2 bg-primary text-white rounded-md hover:bg-green-600"
+                  className="px-4 py-2 bg-primary text-foreground rounded-md hover:bg-green-600"
                 >
                   Salvar Alterações
                 </button>
@@ -126,7 +127,7 @@ export function EditProfile() {
 
           {/* Alteração de Senha */}
           <section>
-            <h4 className="text-md font-medium mb-2">Alteração de Senha</h4>
+            <h4 className="text-lg font-medium mb-2">Alteração de Senha</h4>
             <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="password"
@@ -134,7 +135,7 @@ export function EditProfile() {
                 name='currentPassword'
                 value={passwords.currentPassword}
                 onChange={handlePasswordsChange}
-                className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+                className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
                 
               />
               <input
@@ -143,7 +144,7 @@ export function EditProfile() {
                 name='confirmPassword'
                 value={passwords.confirmPassword}
                 onChange={handlePasswordsChange}
-                className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+                className="w-full p-2 rounded-md bg-gray-700 text-foreground  focus:outline-none"
                 
               />
               <input
@@ -152,7 +153,7 @@ export function EditProfile() {
                 name='newPassword'
                 value={passwords.newPassword}
                 onChange={handlePasswordsChange}
-                className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+                className="w-full p-2 rounded-md bg-gray-700 text-foreground  focus:outline-none"
                 
               />
               <input
@@ -161,7 +162,7 @@ export function EditProfile() {
                 name='confirmNewPassword'
                 value={passwords.confirmNewPassword}
                 onChange={handlePasswordsChange}
-                className="w-full p-2 rounded-md bg-gray-700 text-gray-300 focus:outline-none"
+                className="w-full p-2 rounded-md bg-gray-700 text-foreground  focus:outline-none"
                 
 
               />
@@ -169,8 +170,9 @@ export function EditProfile() {
                 <button
                   type="button"
                   onClick={handleSavePassword}
-                  className="px-4 py-2 bg-primary text-white rounded-md hover:bg-green-500"
+                  className="px-4 py-2 bg-primary text-foreground  rounded-md hover:bg-green-600"
                 >
+                  
                   Alterar Senha
                 </button>
               </div>
