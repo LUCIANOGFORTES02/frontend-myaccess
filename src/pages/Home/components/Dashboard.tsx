@@ -1,5 +1,5 @@
 import { FileImage,FileVideo,FileAudio    } from 'lucide-react';
-import Stat from './stat';
+import Stat from './Stat';
 
 export  function Dashboard() {
   return (

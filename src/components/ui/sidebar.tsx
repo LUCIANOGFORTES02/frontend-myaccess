@@ -16,6 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog"
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -204,6 +205,11 @@ const Sidebar = React.forwardRef<
             }
             side={side}
           >
+            <DialogTitle className="sr-only">Menu de Navegação</DialogTitle> {/* Adicionado um título oculto para ajudar na navegação mobile*/}
+            <DialogDescription className="sr-only">
+              Este é o menu de navegação. Use as opções para acessar as diferentes seções.
+            </DialogDescription>
+
             <div className="flex h-full w-full flex-col">{children}</div>
           </SheetContent>
         </Sheet>

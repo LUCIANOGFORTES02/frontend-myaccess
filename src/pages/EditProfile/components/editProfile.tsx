@@ -8,7 +8,8 @@ export function EditProfile() {
 
   const [userDetails, setUserDetails] = useState({
     firstName: "",
-    lastName: "",
+    userName: "",
+    description:"",
     email: "",
   });
 
@@ -32,7 +33,11 @@ export function EditProfile() {
 
   // Função para salvar as alterações
   const handleSaveDetails = () => {
-    console.log("Saved details:", userDetails);
+    try{
+
+    } catch(error){
+
+    }
   };
 
   // Função para salvar a senha
@@ -72,8 +77,14 @@ export function EditProfile() {
               />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <h3 className="text-xl font-semibold mt-4">@User-Name</h3>
-          <p className="text-sm text-foreground">user@email.com</p>
+          <div className='flex flex-1 flex-col items-center '>
+          <h3 className="text-xl font-semibold mt-2">@User-Name{userDetails.firstName}</h3>
+          <p className="text-sm text-foreground mt-1 text-justify ">
+            <span >
+              Fotógrafo amador e amante da tecnologia.{userDetails.description}
+            </span>
+          </p>
+          </div>
           <button className="mt-4 px-4 py-2 bg-primary text-foreground rounded-md hover:bg-green-600">
             Editar
           </button>
@@ -90,7 +101,7 @@ export function EditProfile() {
             <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="text"
-                placeholder="Primeiro nome"
+                placeholder="Nome completo"
                 name='firstName'
                 value={userDetails.firstName}
                 onChange={handleDetailsChange}
@@ -98,9 +109,9 @@ export function EditProfile() {
               />
               <input
                 type="text"
-                placeholder="Sobrenome"
-                name='lastName'
-                value={userDetails.lastName}
+                placeholder="Nome de usuário"
+                name='userName'
+                value={userDetails.userName}
                 onChange={handleDetailsChange}
                 className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
               />
