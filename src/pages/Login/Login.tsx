@@ -58,13 +58,17 @@ export default function Login() {
     }
     try {
       const response = await authService.register(name, username, email, password);
-      if (response?.status === 201) {
+      if (response?.status == 201) {
         const successMessage = response.data?.message || 'Cadastro realizado com sucesso!';
         showToast('success', successMessage);
         setShowSignup(false); // Voltar para tela de login
       }
-      const successMessage = 'Nome ou Username já cadastrado';
-      showToast('error', successMessage);
+      else{
+        const successMessage = 'Nome ou Username já cadastrado';
+        showToast('error', successMessage);
+
+      }
+
 
     } catch (error) {
       showToast('error', 'Erro ao realizar cadastro.');

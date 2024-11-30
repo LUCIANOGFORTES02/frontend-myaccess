@@ -9,7 +9,7 @@ export const authService = {
     },
   
     signin: async (email: string, password: string): Promise<any> => {
-      const response = await api.post('/signin', { email, password });
+      const response = await api.post('api/auth/login', { email, password });
       return response.data;
     },
   
@@ -27,8 +27,6 @@ export const authService = {
         password,
         
       });
-      console.log(response.data)
-
-      return response.data;
+      return response;
     },
   };
