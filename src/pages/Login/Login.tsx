@@ -33,12 +33,17 @@ export default function Login() {
 
   
   //Função para Login
- const handleLogin= async() =>{
+ const handleLogin = async() =>{
+  if (!email || !password) {
+    toast.error("Preencha todos os campos!", { theme: "dark" });
+    return;
+  }
+
     try{
       const isLogged = await auth.signin(email,password);
       if(isLogged){
+        // showToast('success','Login realizada com sucesso.');
         navigate('/'); 
-        showToast('success','Login realizada com sucesso.');
       }
       else{
         showToast('error','Ops... Email ou senha incorretos');
@@ -50,8 +55,8 @@ export default function Login() {
   }
 
   //Função para cadastro
-  const handleCadastrar=async()=>{
-    if(password!=confirmpassword){
+  const handleCadastrar = async()=>{
+    if(password!=confirmpassword || !name || !username){
       showToast('error','As senhas não coincidem')
       console.log("Senhas diferentes")
       return

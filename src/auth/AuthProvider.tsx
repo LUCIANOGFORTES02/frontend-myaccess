@@ -7,19 +7,19 @@ export const AuthProvider=({children}:{children: JSX.Element})=>{
 
     useEffect(()=>{
         const validateToken = async ()=>{
-            const storageData = localStorage.getItem('userKey');//Pegando o token
-            if(storageData){
+            const token = localStorage.getItem('userKey');//Pegando o token
+            if(token){
                 try{
-                    const data = await authService.validateToken(storageData);            
-                    if(data && data.user){
-                        setUser(data.user)
+                    const response = await authService.validateToken(token);            
+                    if(response?.payload){
+                        setUser(response.payload)
                     }
                     else{
-                        handleLogout(); // Remove dados inválidos
+                        logout(); // Remove dados inválidos
                     } 
                 }catch (error){
                     console.error('Erro ao validar token:', error);
-                    handleLogout(); // Remove dados inválidos
+                    logout(); // Remove dados inválidos
                     }
             }
         }
@@ -30,12 +30,15 @@ export const AuthProvider=({children}:{children: JSX.Element})=>{
 
     //Função de Login
     const signin = async(email: string, password: string)=>{//Requisição ao backend e irá receber a resposta positiva ou não
+        console.log("Senha e email",email,password)
         try {
             const data = await authService.signin(email,password);
+            console.log(data)
                    
-             if(data.user && data.token){
+             if(data.payload && data.token){
                // localStorage.setItem('user',JSON.stringify(data.user))//Armazenar as informações do usuário no localStorage
-                setUser(data.user);
+               localStorage.setItem("userToken", data.token); 
+               setUser(data.payload);
                 setToken(data.token)
                 return true;
              }
@@ -45,7 +48,7 @@ export const AuthProvider=({children}:{children: JSX.Element})=>{
         return false;       
     }
 
-    const handleLogout= ()=>{
+    const logout= ()=>{
         localStorage.removeItem('userKey')
         setUser(null);
        ;
@@ -57,7 +60,7 @@ export const AuthProvider=({children}:{children: JSX.Element})=>{
 
 
 return(
-    <AuthContext.Provider value={{user, signin, logout: handleLogout }}>
+    <AuthContext.Provider value={{user, signin, logout }}>
         {children}
     </AuthContext.Provider>
 )

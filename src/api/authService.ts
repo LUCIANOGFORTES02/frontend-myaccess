@@ -4,12 +4,13 @@ import api from './axiosInstance'
 
 export const authService = {
     validateToken: async (token: string): Promise<any> => {
-      const response = await api.post('/validateToken', { token });
+      const response = await api.post('api/auth/validateToken', { token });
       return response.data;
     },
   
-    signin: async (email: string, password: string): Promise<any> => {
-      const response = await api.post('api/auth/login', { email, password });
+    signin: async (usernameOrEmail: string, password: string): Promise<any> => {
+      const response = await api.post('api/auth/login', { usernameOrEmail, password });
+      console.log("Login Response:", response);
       return response.data;
     },
   
@@ -20,7 +21,6 @@ export const authService = {
       password: string,
     ): Promise<any> => {
       const response = await api.post('api/auth/register', {
-        
         name,
         username,
         email,

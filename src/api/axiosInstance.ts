@@ -9,18 +9,28 @@ const api = axios.create({
 // const navigate = useNavigate()
 
 //Interceptores de requisição
+// api.interceptors.request.use(
+    
+//     (config)=>{
+//         const token = localStorage.getItem("token");
+//         if(token){
+//             config.headers.Authorization = `Bearer ${token}`;
+//         }
+//         return config
+//     },
+//     (error) => Promise.reject(error)
+// );
 api.interceptors.request.use(
-    (config)=>{
-        const token = localStorage.getItem("token");
-        if(token){
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config
+    (config) => {
+        return config;
     },
-    (error) => Promise.reject(error)
+    (error) => {
+        return Promise.reject(error);
+    }
 );
 
-//Lidar com erros antes de enviar a requisição
+
+// Lidar com erros antes de enviar a requisição
 api.interceptors.response.use(
     (response)=>{
         return response

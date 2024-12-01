@@ -1,9 +1,19 @@
 // import {Card} from "@/components/ui/card"
 import { Columns2, LogOut  } from 'lucide-react';
 import { useSidebar } from "@/components/ui/sidebar"
+import { useContext } from 'react';
+import { AuthContext } from '@/auth/AuthContext';
 
 
 export default function Header() {
+  const auth = useContext(AuthContext);
+
+
+  const handleLogoutClick =async()=>{
+    await auth.logout()
+    window.location.href = window.location.href
+  //await navigate('/');
+  }
 
   const { toggleSidebar } = useSidebar()
   return (
@@ -16,9 +26,11 @@ export default function Header() {
           </button>
                   
               <h1 className="text-lg font-semibold ">
-              <span className="text-white">Multimídia</span></h1>
+              <span className="text-white">Myaccess</span></h1>
           
-          <button><LogOut /></button>
+              <button onClick={handleLogoutClick} className="w-full justify-start gap-2">
+                <LogOut size={16}/>
+              </button>
 
       </div>
     </div>
