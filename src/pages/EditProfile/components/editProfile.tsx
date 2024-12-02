@@ -25,17 +25,12 @@ export function EditProfile() {
     confirmNewPassword: "",
   });
 
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  //const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [description, setDescription] = useState("");
   const [name, setName] = useState(user?.name || "Nome completo");
   const [email, setEmail] = useState(user?.email || "Email");
 
-  // Função para atualizar os detalhes
-  const handleDetailsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserDetails({ ...userDetails, [name]: value });
-  };
   // Função para atualizar a senha
   const handlePasswordsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -86,7 +81,7 @@ export function EditProfile() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setSelectedImage(file);
+      //setSelectedImage(file);
       setPreviewImage(URL.createObjectURL(file));
     }
   };
