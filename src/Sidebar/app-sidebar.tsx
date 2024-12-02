@@ -15,6 +15,8 @@ import {
 import { Link } from "react-router-dom"
 import { DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { DropdownMenu } from "@radix-ui/react-dropdown-menu"
+import { AuthContext } from "@/auth/AuthContext"
+import { useContext } from "react"
 
 // Menu items.
 const items = [
@@ -42,6 +44,7 @@ const items = [
 ]
 
 export function AppSidebar() {
+  const {user} = useContext(AuthContext)
 
 
   return (
@@ -59,9 +62,9 @@ export function AppSidebar() {
                       <Link to={'/editprofile'}>
                         <Avatar className="w-10 h-10" >
                           <AvatarImage 
-                            src="https://github.com/shadcn.png"
+                              src={user?.profileImage||"https://github.com/shadcn.png"}
                           />
-                          <AvatarFallback>CN</AvatarFallback>
+                          <AvatarFallback> {user?.name?.[0]?.toUpperCase()} </AvatarFallback>
                         </Avatar>
                       </Link>
                     </div>
@@ -69,7 +72,7 @@ export function AppSidebar() {
                   <a href="/editprofile">
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       <span className="truncate font-semibold text-foreground">Hello 👋</span>
-                      <span className="truncate text-xs text-foreground">Gabriel Augusto</span>
+                      <span className="truncate text-xs text-foreground">{user?.name}</span>
                     </div>
                   </a>
                   </SidebarMenuButton>

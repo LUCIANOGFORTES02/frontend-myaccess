@@ -1,11 +1,14 @@
+import { userService } from '@/api/userService';
+import { AuthContext } from '@/auth/AuthContext';
 import { Avatar } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export function EditProfile() {
+  const {user} = useContext(AuthContext)
 
   const [userDetails, setUserDetails] = useState({
     firstName: "",
@@ -26,7 +29,7 @@ export function EditProfile() {
 
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [description, setDescription] = useState(userDetails.description);
+  const [description, setDescription] = useState("");
 
   // Função para atualizar os detalhes
   const handleDetailsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,12 +78,37 @@ export function EditProfile() {
   };
 
   //Função para salvar a imagem de perfil e a descrição
-  const handleSaveChanges = () => {
+  const handleSaveChanges = async () => {
+
+    try {
+      const updateData = {
+        description,
+        profileImage: previewImage,
+      };
+      const updatedUser = await userService.updateUserProfile(updateData);
+      console.log("UpdateUser",updatedUser)
+      if(updatedUser){
+        
+      }
+      // Atualize o estado local do usuário após a atualização bem-sucedida
+      setUserDetails((prevDetails) => ({
+        ...prevDetails,
+        description:updatedUser.description,
+        profileImage: updatedUser.profileImage || "",
+      }));
+
+      setDescription(updatedUser.description); 
+      setPreviewImage(updatedUser.profileImage);
+
+      
+    } catch (error) {
+      console.error('Erro ao salvar alterações:', error);
+    }
     if (selectedImage) {
-      toast.success("Foto de perfil atualizada com sucesso!");
+      // toast.success("Foto de perfil atualizada com sucesso!");
     }
     setUserDetails({ ...userDetails, description, profileImage: previewImage || userDetails.profileImage });
-    toast.success("Descrição atualizada com sucesso!");
+    // toast.success("Descrição atualizada com sucesso!");
   };
 
 
@@ -95,15 +123,15 @@ export function EditProfile() {
           >
           <Avatar className="border-4 border-accent shadow-lg w-32 h-32" >
             <AvatarImage 
-              src="https://github.com/shadcn.png"
+              src={previewImage||user?.profileImage||"https://github.com/shadcn.png"}
               />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>{user?.name?.[0]?.toUpperCase()} </AvatarFallback>
           </Avatar>
           <div className='flex flex-1 flex-col items-center '>
-          <h3 className="text-xl font-semibold mt-2">@User-Name</h3>
+          <h3 className="text-xl font-semibold mt-2">{user?.username}</h3>
           <p className="text-sm text-foreground mt-1 text-justify ">
             <span >
-              Fotógrafo amador e amante da tecnologia.
+              {description || user?.description}
             </span>
           </p>
           </div>
@@ -122,8 +150,8 @@ export function EditProfile() {
                 {/* Campo para editar a imagem */}
                 <div className="flex flex-col items-center gap-4">
                   <Avatar className="w-24 h-24">
-                    <AvatarImage src={previewImage || userDetails.profileImage} />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarImage src={previewImage || user?.profileImage} />
+                    <AvatarFallback>{user?.name?.[0]?.toUpperCase()}</AvatarFallback>
                   </Avatar>
                   <input
                     type="file"

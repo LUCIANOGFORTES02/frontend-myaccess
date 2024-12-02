@@ -3,16 +3,18 @@ import { Columns2, LogOut  } from 'lucide-react';
 import { useSidebar } from "@/components/ui/sidebar"
 import { useContext } from 'react';
 import { AuthContext } from '@/auth/AuthContext';
+import {useNavigate } from 'react-router-dom';
 
 
 export default function Header() {
   const auth = useContext(AuthContext);
+  const navigate = useNavigate()
 
 
   const handleLogoutClick =async()=>{
     await auth.logout()
     window.location.href = window.location.href
-  //await navigate('/');
+    //  navigate('/');
   }
 
   const { toggleSidebar } = useSidebar()
@@ -27,10 +29,10 @@ export default function Header() {
                   
               <h1 className="text-lg font-semibold ">
               <span className="text-white">Myaccess</span></h1>
-          
-              <button onClick={handleLogoutClick} className="w-full justify-start gap-2">
-                <LogOut size={16}/>
-              </button>
+      
+          <button onClick={handleLogoutClick} >
+            <LogOut size={24}/>
+          </button>
 
       </div>
     </div>
