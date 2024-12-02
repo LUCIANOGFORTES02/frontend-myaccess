@@ -88,7 +88,7 @@ Páginas da aplicação:
   - Usuário
   - Senha
 - Dashboard
-  - Vizualição das mídias por categorias (Imagens, vídeos)
+  - Visualização das mídias por categorias (Imagens, vídeos)
   - Barra lateral com opções por categorias
   - Perfil
   - Logout
