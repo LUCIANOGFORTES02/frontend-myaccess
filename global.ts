@@ -1,1 +1,1 @@
-export const baseApiUrl= 'http://localhost:3001'
+export const baseApiUrl= 'http://ec2-52-200-213-111.compute-1.amazonaws.com:3001'
