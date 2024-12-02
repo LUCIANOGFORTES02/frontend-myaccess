@@ -1,4 +1,4 @@
-# FrameCloud
+# Myaccess
 Aplicação de gerenciamento de multimídia.
 
 Projeto da disciplina de Tópicos de Engenharia de Software
