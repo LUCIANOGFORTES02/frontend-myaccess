@@ -14,6 +14,11 @@ export const AuthProvider=({children}:{children: JSX.Element})=>{
     }
     }, []);
 
+    const saveUserInfos = (user: User) => {
+        localStorage.setItem("userData", JSON.stringify(user));
+        setUser(user);
+    }
+
     //Função de Login
     const signin = async(email: string, password: string)=>{//Requisição ao backend e irá receber a resposta positiva ou não
         try {
@@ -48,7 +53,7 @@ export const AuthProvider=({children}:{children: JSX.Element})=>{
 
 
 return(
-    <AuthContext.Provider value={{user, signin, logout }}>
+    <AuthContext.Provider value={{user, signin, logout, saveUserInfos }}>
         {children}
     </AuthContext.Provider>
 )

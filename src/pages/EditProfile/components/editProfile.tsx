@@ -6,16 +6,17 @@ import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import React, { useContext, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { User } from '../../../types/User';
 
 export function EditProfile() {
-  const { user } = useContext(AuthContext)
+  const { user, saveUserInfos } = useContext(AuthContext)
 
   const [userDetails, setUserDetails] = useState({
-    firstName: "",
-    userName: user?.name || "",
-    description:"",
+    name: user?.name || "",
+    username: user?.username || "",
+    description: user?.description || "",
     email: user?.email || "",
-    profileImage: "",
+    profileImage: user?.profileImage || "",
   });
 
   const [passwords, setPasswords] = useState({
@@ -50,9 +51,19 @@ export function EditProfile() {
       // Atualize o estado local do usuário após a atualização bem-sucedida
       setUserDetails((prevDetails) => ({
         ...prevDetails,
-        firstName: updatedUser?.name,
+        name: updatedUser?.name,
         email: updatedUser?.email,
       }));
+
+      saveUserInfos({
+        id: user?.id,
+        name: updatedUser?.name,
+        username: userDetails.username,
+        email: updatedUser?.email,
+        password: user?.password,
+        description: userDetails.description,
+        profileImage: user?.profileImage
+      } as User)
 
       toast.success("Informações atualizadas com sucesso!");
     } catch (error) {
@@ -106,6 +117,16 @@ export function EditProfile() {
       setDescription(updatedUser.description); 
       setPreviewImage(updatedUser.profileImage);
       
+      saveUserInfos({
+        id: user?.id,
+        name: user?.name,
+        username: user?.username,
+        email: user?.email,
+        password: user?.password,
+        description: updatedUser.description,
+        profileImage: user?.profileImage
+      } as User)
+
       toast.success("Informações atualizadas com sucesso!");
     } catch (error) {
       console.error('Erro ao salvar alterações:', error);
