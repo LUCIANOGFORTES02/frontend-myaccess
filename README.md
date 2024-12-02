@@ -62,17 +62,24 @@ yarn install
 Estrutura basica do projeto:
 ```
 ├── src/
-│   ├── auth/               # Gerenciamento de autenticação
-│   ├── components/         # Componentes reutilizáveis
-│   ├── hooks/              # Hooks 
-│   │   ├── useApi.ts       # Hook para chamadas de API
-│   ├── pages/              # Páginas da aplicação
+├── 📂 api # Integração com os serviços de API
+│   |   ├── authService.ts # Gerencia chamadas de API relacionadas à autenticação
+│   |   ├── userService.ts # Gerencia chamadas de API relacionadas ao usuário
+│   |   └── axiosInstance.ts # Configuração do Axios com interceptadores
+│   📂 auth/               # Gerenciamento de autenticação
+│   |   ├── AuthContext.ts # Fornece o estado global e ações de autenticação
+│   |   ├── AuthProvider.ts # Provedor de contexto para autenticação
+│   |   ├── RequireAuth.ts # Componente de proteção de rotas
+│   📂 components/         # Componentes reutilizáveis
+│   📂 hooks/              # Hooks 
+│   📂 pages/              # Páginas da aplicação
+├── 📂 types # Tipos e interfaces do TypeScript
 │   ├── App.tsx             # Componente raiz
 │   ├── main.tsx            # Ponto de entrada da aplicação
 ├── public/                 # Arquivos estáticos
 ├── tailwind.config.js      # Configuração do Tailwind CSS
 ├── postcss.config.js       # Configuração do PostCSS
-├── global.js               # Váriáveis globais
+├── global.js               # Configurações globais (ex.: URL base da API)
 ├── package.json            # Dependências e scripts do projeto
 └── README.md               # Documentação
 
