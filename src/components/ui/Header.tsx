@@ -3,13 +3,9 @@ import { Columns2, LogOut  } from 'lucide-react';
 import { useSidebar } from "@/components/ui/sidebar"
 import { useContext } from 'react';
 import { AuthContext } from '@/auth/AuthContext';
-import {useNavigate } from 'react-router-dom';
-
 
 export default function Header() {
   const auth = useContext(AuthContext);
-  const navigate = useNavigate()
-
 
   const handleLogoutClick =async()=>{
     await auth.logout()
