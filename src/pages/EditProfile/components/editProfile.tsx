@@ -1,20 +1,20 @@
 import { userService } from '@/api/userService';
 import { AuthContext } from '@/auth/AuthContext';
 import { Avatar } from '@/components/ui/avatar';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { AvatarFallback, AvatarImage } from '@radix-ui/react-avatar';
 import React, { useContext, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export function EditProfile() {
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
 
   const [userDetails, setUserDetails] = useState({
     firstName: "",
-    userName: "",
+    userName: user?.name || "",
     description:"",
-    email: "",
+    email: user?.email || "",
     profileImage: "",
   });
 
@@ -25,11 +25,11 @@ export function EditProfile() {
     confirmNewPassword: "",
   });
 
-
-
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [description, setDescription] = useState("");
+  const [name, setName] = useState(user?.name || "Nome completo");
+  const [email, setEmail] = useState(user?.email || "Email");
 
   // Função para atualizar os detalhes
   const handleDetailsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,12 +42,26 @@ export function EditProfile() {
     setPasswords({ ...passwords, [name]: value });
   };
 
-  // Função para salvar as alterações
-  const handleSaveDetails = () => {
-    try{
+  // Função para salvar as alterações das informacoes do usuario
+  const handleSaveUserInfos = async () => {
+    try {
+      const updateData = {
+        name,
+        email,
+      };
 
-    } catch(error){
+      const updatedUser = await userService.updateUserProfile(updateData);
 
+      // Atualize o estado local do usuário após a atualização bem-sucedida
+      setUserDetails((prevDetails) => ({
+        ...prevDetails,
+        firstName: updatedUser?.name,
+        email: updatedUser?.email,
+      }));
+
+      toast.success("Informações atualizadas com sucesso!");
+    } catch (error) {
+      console.error('Erro ao salvar alterações:', error);
     }
   };
 
@@ -79,40 +93,31 @@ export function EditProfile() {
 
   //Função para salvar a imagem de perfil e a descrição
   const handleSaveChanges = async () => {
-
     try {
       const updateData = {
         description,
         profileImage: previewImage,
       };
+
       const updatedUser = await userService.updateUserProfile(updateData);
-      console.log("UpdateUser",updatedUser)
-      if(updatedUser){
-        
-      }
+
       // Atualize o estado local do usuário após a atualização bem-sucedida
       setUserDetails((prevDetails) => ({
         ...prevDetails,
-        description:updatedUser.description,
+        description: updatedUser.description,
         profileImage: updatedUser.profileImage || "",
       }));
 
       setDescription(updatedUser.description); 
       setPreviewImage(updatedUser.profileImage);
-
       
+      toast.success("Informações atualizadas com sucesso!");
     } catch (error) {
       console.error('Erro ao salvar alterações:', error);
     }
-    if (selectedImage) {
-      // toast.success("Foto de perfil atualizada com sucesso!");
-    }
+
     setUserDetails({ ...userDetails, description, profileImage: previewImage || userDetails.profileImage });
-    // toast.success("Descrição atualizada com sucesso!");
   };
-
-
-
 
   return (
     <div className="flex flex-1 flex-col p-4 h-screen" >
@@ -151,7 +156,7 @@ export function EditProfile() {
                 <div className="flex flex-col items-center gap-4">
                   <Avatar className="w-24 h-24">
                     <AvatarImage src={previewImage || user?.profileImage} />
-                    <AvatarFallback>{user?.name?.[0]?.toUpperCase()}</AvatarFallback>
+                    <AvatarFallback>{name || user?.name?.[0]?.toUpperCase()}</AvatarFallback>
                   </Avatar>
                   <input
                     type="file"
@@ -175,12 +180,14 @@ export function EditProfile() {
                   className="w-full p-4 h-32 rounded-md bg-gray-700 text-foreground focus:outline-none"
                 ></textarea>
                 {/* Botão para salvar alterações */}
-                <button
-                  className="mt-2 px-4 py-2 bg-primary text-white rounded-md hover:bg-green-600"
-                  onClick={handleSaveChanges}
-                >
-                  Salvar Alterações
-                </button>
+                <DialogClose>
+                  <button
+                    className="mt-2 px-4 py-2 bg-primary text-white rounded-md hover:bg-green-600"
+                    onClick={handleSaveChanges}
+                  >
+                    Salvar Alterações
+                  </button>
+                </DialogClose>
               </div>
             </DialogContent>
           </Dialog>
@@ -199,33 +206,25 @@ export function EditProfile() {
             <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="text"
-                placeholder="Nome completo"
+                placeholder={name}
                 name='firstName'
-                value={userDetails.firstName}
-                onChange={handleDetailsChange}
-                className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
-              />
-              <input
-                type="text"
-                placeholder="Nome de usuário"
-                name='userName'
-                value={userDetails.userName}
-                onChange={handleDetailsChange}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
               />
               <input
                 type="email"
-                placeholder="Email"
+                placeholder={email}
                 name='email'
-                value={userDetails.email}
-                onChange={handleDetailsChange}
-                className="md:col-span-2 w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
               />
             
               <div className="col-span-full">
                 <button
                   type="button"
-                  onClick={handleSaveDetails}
+                  onClick={handleSaveUserInfos}
                   className="px-4 py-2 bg-primary text-foreground rounded-md hover:bg-green-600"
                 >
                   Salvar Alterações

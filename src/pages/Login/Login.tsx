@@ -15,6 +15,7 @@ export default function Login() {
  //Estados
  const[username,setUsername]=useState('');
  const[name,setName]=useState('');
+ const[description,setDescription]=useState('');
  const[email,setEmail]=useState('');
  const[password,setPassword]=useState('');
  const[confirmpassword,setConfirmpassword]=useState('');
@@ -62,7 +63,7 @@ export default function Login() {
       return
     }
     try {
-      const response = await authService.register(name, username, email, password);
+      const response = await authService.register(name, username, description, email, password);
       if (response?.status == 201) {
         const successMessage = response.data?.message || 'Cadastro realizado com sucesso!';
         showToast('success', successMessage);
@@ -86,6 +87,7 @@ export default function Login() {
     setShowSignup(!showSignup);
     setName('')
     setUsername('')
+    setDescription('')
     setEmail('')
     setPassword('')
     setConfirmpassword('')
@@ -108,6 +110,15 @@ return (
             placeholder='Nome' 
             value={name} 
             onChange={e=> setName(e.target.value)} 
+          />
+          )}
+          {showSignup &&(
+          <input 
+            className="w-full bg-transparent border-b text-foreground focus:outline-none focus:border-primary block text-xl mb-3" 
+            type="text" 
+            placeholder='Descrição' 
+            value={description} 
+            onChange={e=> setDescription(e.target.value)} 
           />
           )}
           {showSignup &&(

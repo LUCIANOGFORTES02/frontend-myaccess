@@ -28,7 +28,7 @@ export default function Header() {
           </button>
                   
               <h1 className="text-lg font-semibold ">
-              <span className="text-white">Myaccess</span></h1>
+              <span className="text-white">MyAccess</span></h1>
       
           <button onClick={handleLogoutClick} >
             <LogOut size={24}/>

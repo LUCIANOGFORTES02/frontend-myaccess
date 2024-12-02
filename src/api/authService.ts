@@ -17,16 +17,18 @@ export const authService = {
     register: async (
       name: string,
       username:string,
+      description:string,
       email: string,
       password: string,
     ): Promise<any> => {
       const response = await api.post('api/auth/register', {
         name,
         username,
+        description,
         email,
         password,
-        
       });
+      
       return response;
     },
   };
