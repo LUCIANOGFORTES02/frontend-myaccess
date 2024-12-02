@@ -78,3 +78,20 @@ Estrutura basica do projeto:
 
 ```
 
+## Estrutura da Aplicação
+Páginas da aplicação:
+- Página de Cadastro
+  - Nome de usuário
+  - Email
+  - Senha
+- Página de Login
+  - Usuário
+  - Senha
+- Dashboard
+  - Vizualição das mídias por categorias (Imagens, vídeos)
+  - Barra lateral com opções por categorias
+  - Perfil
+  - Logout
+- Página de Edição de Perfil
+  - Formulário com campos para edição
+  - Barra lateral com opções por categorias
