@@ -8,13 +8,13 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export function EditProfile() {
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
 
   const [userDetails, setUserDetails] = useState({
     firstName: "",
-    userName: "",
+    userName: user?.name || "",
     description:"",
-    email: "",
+    email: user?.email || "",
     profileImage: "",
   });
 
@@ -28,6 +28,8 @@ export function EditProfile() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [description, setDescription] = useState("");
+  const [name, setName] = useState(user?.name || "Nome completo");
+  const [email, setEmail] = useState(user?.email || "Email");
 
   // Função para atualizar os detalhes
   const handleDetailsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,8 +46,8 @@ export function EditProfile() {
   const handleSaveUserInfos = async () => {
     try {
       const updateData = {
-        name: userDetails.firstName,
-        email: userDetails.email,
+        name,
+        email,
       };
 
       const updatedUser = await userService.updateUserProfile(updateData);
@@ -53,12 +55,10 @@ export function EditProfile() {
       // Atualize o estado local do usuário após a atualização bem-sucedida
       setUserDetails((prevDetails) => ({
         ...prevDetails,
-        name: updatedUser.name,
-        email: updatedUser.email,
+        firstName: updatedUser?.name,
+        email: updatedUser?.email,
       }));
 
-      setUserDetails({ ...userDetails, description, profileImage: previewImage || userDetails.profileImage });
-      
       toast.success("Informações atualizadas com sucesso!");
     } catch (error) {
       console.error('Erro ao salvar alterações:', error);
@@ -156,7 +156,7 @@ export function EditProfile() {
                 <div className="flex flex-col items-center gap-4">
                   <Avatar className="w-24 h-24">
                     <AvatarImage src={previewImage || user?.profileImage} />
-                    <AvatarFallback>{user?.name?.[0]?.toUpperCase()}</AvatarFallback>
+                    <AvatarFallback>{name || user?.name?.[0]?.toUpperCase()}</AvatarFallback>
                   </Avatar>
                   <input
                     type="file"
@@ -206,18 +206,18 @@ export function EditProfile() {
             <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="text"
-                placeholder="Nome completo"
+                placeholder={name}
                 name='firstName'
-                value={userDetails.firstName}
-                onChange={handleDetailsChange}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
               />
               <input
                 type="email"
-                placeholder="Email"
+                placeholder={email}
                 name='email'
-                value={userDetails.email}
-                onChange={handleDetailsChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
               />
             

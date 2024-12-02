@@ -10,6 +10,5 @@ export default function EditProfilePage() {
       <PageTitle icon={UserPen} main="Edição" sub="Edição do seu perfil"/>
       <EditProfile  />
     </LayoutSidebar>
-    
   );
 }
