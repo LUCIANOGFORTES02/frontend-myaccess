@@ -13,7 +13,7 @@ export function LayoutSidebar({children,}: {children?: React.ReactNode;}) {
   return (
     <SidebarProvider 
       style={{
-        "--sidebar-width": "12rem",
+        "--sidebar-width": "14rem",
         "--sidebar-width-mobile": "10rem",
         "--sidebar-width-icon":"4rem"
       } as any}

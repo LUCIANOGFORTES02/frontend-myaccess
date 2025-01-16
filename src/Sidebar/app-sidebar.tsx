@@ -1,6 +1,7 @@
 import { FileVideo , Home, FileAudio , Images } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Separator } from "@/components/ui/separator"
+import { Upload,Files } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar"
+import { Separator ,} from "@/components/ui/separator"
 import {
   Sidebar,
   SidebarContent,
@@ -26,17 +27,27 @@ const items = [
     icon: Home,
   },
   {
-    title: "Gerenciar Imagens",
+    title: "Upload de Arquivos",
+    url: "/upload",
+    icon: Upload,
+  },
+  {
+    title: "Arquivos",
+    url: "/files",
+    icon: Files,
+  },
+  {
+    title: "Imagens",
     url: "/image",
     icon: Images ,
   },
   {
-    title: "Gerenciar Vídeos",
+    title: "Vídeos",
     url: "#",
     icon: FileVideo ,
   },
   {
-    title: "Gerenciar Áudios",
+    title: "Áudios",
     url: "#",
     icon: FileAudio ,
   },
@@ -69,7 +80,7 @@ export function AppSidebar() {
                       </Link>
                     </div>
                   {/* Saudação ao usuário */}
-                  <a href="/editprofile">
+                  <a href="/editprofile" className="">
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       <span className="truncate font-semibold text-foreground">Hello 👋</span>
                       <span className="truncate text-xs text-foreground">{user?.name}</span>
@@ -95,8 +106,8 @@ export function AppSidebar() {
               <SidebarMenu >
                 {items.map((item) => (
                   <SidebarMenuItem key={item.title}  >
-                    <SidebarMenuButton asChild className="hover:bg-sidebar-hover"  >
-                      <a  href={item.url}>
+                    <SidebarMenuButton asChild className="hover:bg-sidebar-hover  "  >
+                      <a  href={item.url} className="hover:bg-sidebar-hover  focus:bg-transparent active:bg-transparent">
                         <item.icon className="text-foreground" />
                         <span  className="text-sm text-foreground" >{item.title}</span>
                       </a>
