@@ -1,5 +1,5 @@
 import { CloudUpload } from 'lucide-react';
-import  { useRef, useState } from "react";
+import  { useRef } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 
@@ -16,10 +16,7 @@ export default function UploadArea() {
     { name: "code.js", size: 10000, status: "Uploading", progress: 50 },
     { name: "video.mp4", size: 20000000, status: "Uploading", progress: 30 },
     { name: "audio.mp3", size: 5000000, status: "Completed", progress: 100 },
-    { name: "photo.png", size: 2500000, status: "Completed", progress: 100 },
-    { name: "design.psd", size: 1200000, status: "Completed", progress: 100 },
-    { name: "ebook.epub", size: 800000, status: "Uploading", progress: 90 },
-    { name: "notes.txt", size: 5000, status: "Completed", progress: 100 },
+
   ];
   
 
@@ -49,17 +46,17 @@ export default function UploadArea() {
   };
 
   return (
-    <div className=" min-h-screen flex flex-col items-center py-8">
-        <div className=" flex flex-col items-center  w-full " >
+    <div className=" grid grid-cols-1 md:grid-cols-3 gap-8 p-8 ">
+      {/*Área Pontilhada de Upload */}
+        <div className=" col-span-1" >
             
-            {/*Área Pontilhada */}
-            <div  className="  max-w-[22rem] md:max-w-xl  w-full border-2 border-dashed border-gray-300 rounded-lg p-6 text-center  shadow-md ">
+            <div  className="flex flex-col items-center justify-center w-full h-full border-2 border-dashed border-gray-300 rounded-lg p-6 text-center  shadow-md ">
 
                     {/* Texto */}
                     <div className='flex flex-col items-center' >
                         <div className='mb-4'>
 
-                            <CloudUpload className='w-20 h-20 '/>
+                            <CloudUpload className='w-20 h-20 text-gray-300'/>
 
                         </div>
                         <p className='text-foreground text-xl font-medium'>Arraste e solte</p>
@@ -86,44 +83,42 @@ export default function UploadArea() {
             </div>
         </div>
             {/* Lista de Uploads */}
-            <div className="w-full sm:max-w-sm md:max-w-lg mt-6">
-                <h4 className="text-2xl font-semibold  mb-4 text-left ">Lista de arquivos</h4>
-                <ScrollArea className="h-[32rem] w-96  rounded-md border border-gray-600 bg-gray-800  shadow-lg">
+            <div className="col-span-2 flex flex-col  ">
+                {/* <h4 className="text-2xl font-semibold  mb-4 text-left ">Lista de arquivos</h4> */}
+                <ScrollArea className="h-[32rem]  rounded-md  border border-gray-500   shadow-lg ">
+                  {uploadedFiles.length>0 ? (
 
-                    <ul className="space-y-4">
+                    <ul className="space-y-4 border-gray-700 p-4">
                     {uploadedFiles.map((file, index) => (
                         <li
                         key={index}
-                        className="p-4 bg-gray-400 rounded-lg shadow-md flex flex-col"
+                        className="p-4 bg-gray-00 rounded-lg shadow-md flex flex-col"
                         >
                         <div className="flex justify-between items-center">
                             <div>
-                            <span className="font-medium">{file.name}</span>
+                            <span className="font-medium text-gray-500">{file.name}</span>
                             <p className="text-sm text-gray-500">{(file.size / 1024).toFixed(2)} KB</p>
                             </div>
-                            <span
-                            className={`text-sm font-medium ${
-                                file.status === "Completed"
-                                ? "text-green-600"
-                                : file.status === "Uploading"
-                                ? "text-blue-600"
-                                : "text-red-600"
-                            }`}
-                            >
-                            {file.status}
+                            <span className="text-sm font-medium text-blue-400">
+                              {file.status}
                             </span>
-                        </div>
-                        {file.status === "Uploading" && (
-                            <div className="w-full bg-gray-300 rounded-full h-2 mt-2">
-                            <div
-                                className="bg-blue-500 h-2 rounded-full"
-                                style={{ width: `${file.progress}%` }}
-                            ></div>
-                            </div>
-                        )}
-                        </li>
-                    ))}
+                      </div>
+                      <div className="w-full bg-gray-600 rounded-full h-2 mt-2">
+                        <div
+                          className="bg-blue-500 h-2 rounded-full"
+                          style={{ width: `${file.progress}%` }}
+                        ></div>
+                      </div>
+                    </li>
+                    ))}:
                     </ul>
+
+                  ):(
+                    <p className="text-gray-400 text-center p-4">
+                    Nenhum upload em andamento
+                    </p>
+                  )
+                }
                 </ScrollArea>
 
             </div>

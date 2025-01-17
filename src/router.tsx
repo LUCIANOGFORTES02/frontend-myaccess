@@ -5,14 +5,17 @@ import EditProfilePage from './pages/EditProfile/page'
 import ImagePage from './pages/Gerenciador de Imagens/page'
 import { RequireAuth } from './auth/RequireAuth'
 import UploadObject from './pages/Upload/page'
-import ListFiles from './pages/List/page'
+import   ListFiles from './pages/ListFiles/page'
 
 export default function Router() {
   return (
     <Routes>
         <Route path='/login' element={<Login/>}/>
         {/* <Route path='/' element={<RequireAuth><DashboardPage/></RequireAuth>}/> */}
+        {/* <Route path='/editprofile' element={<RequireAuth><EditProfilePage/></RequireAuth>}/> */}
         <Route path='/' element={<DashboardPage/>}/>
+        <Route path='/editprofile' element={<EditProfilePage/>}/>
+
 
         <Route path='/upload' element={<UploadObject/>}/>
         <Route path='/files' element={<ListFiles/>}/>
@@ -20,7 +23,7 @@ export default function Router() {
 
 
 
-        <Route path='/editprofile' element={<RequireAuth><EditProfilePage/></RequireAuth>}/>
+
     </Routes>
     
   )

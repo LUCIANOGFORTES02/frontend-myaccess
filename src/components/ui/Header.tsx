@@ -16,7 +16,7 @@ export default function Header() {
   const { toggleSidebar } = useSidebar()
   return (
     <div className="flex-1 flex flex-col h-screen overflow-hidden">
-      <div className=" border-gray-800 border-b  p-[1.5rem] flex justify-between items-center"
+      <div className=" border-gray-700 border-b  p-[1.5rem] flex justify-between items-center"
       // style={{background: '#202024'}}
       >
           <button><Columns2 onClick={toggleSidebar}>

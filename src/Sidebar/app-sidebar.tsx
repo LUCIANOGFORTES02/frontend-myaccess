@@ -59,34 +59,36 @@ export function AppSidebar() {
 
 
   return (
-    <Sidebar collapsible="icon" >
-      <SidebarHeader className="bg-background text-foreground pt-3 pb-3 px-4 ">
+    <Sidebar collapsible="icon" className='border-gray-700'>
+      <SidebarHeader className="bg-background  text-foreground pt-3 pb-3 px-4 ">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
+              <Link to={'/editprofile'}>
                 <SidebarMenuButton
                     size="lg"
-                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground hover:bg-sidebar-hover"
+                    className="data-[state=open]:bg-gray-800 hover:bg-sidebar-hover"
                     >
                     <div className="flex aspect-square size-8 items-center justify-center rounded-lg ">
-                      <Link to={'/editprofile'}>
+                     
                         <Avatar className="w-10 h-10" >
                           <AvatarImage 
                               src={user?.profileImage||"https://github.com/shadcn.png"}
                           />
                           <AvatarFallback> {user?.name?.[0]?.toUpperCase()} </AvatarFallback>
                         </Avatar>
-                      </Link>
                     </div>
                   {/* Saudação ao usuário */}
                   <a href="/editprofile" className="">
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-semibold text-foreground">Hello 👋</span>
+                      <span className="truncate font-semibold text-foreground">Olá </span>
                       <span className="truncate text-xs text-foreground">{user?.name}</span>
                     </div>
                   </a>
                   </SidebarMenuButton>
+                  </Link>
+
                 </DropdownMenuTrigger>
               </DropdownMenu>
             </SidebarMenuItem>
@@ -100,7 +102,7 @@ export function AppSidebar() {
     
       <SidebarContent className="bg-background text-foreground">
         <SidebarGroup className="">
-          <SidebarGroupLabel className=" text-foreground text-sm ">Menu</SidebarGroupLabel>
+          <SidebarGroupLabel className=" text-foreground text-lg">Menu</SidebarGroupLabel>
             <SidebarGroupContent>
               {/* Itens do menu */}
               <SidebarMenu >
@@ -109,7 +111,7 @@ export function AppSidebar() {
                     <SidebarMenuButton asChild className="hover:bg-sidebar-hover  "  >
                       <a  href={item.url} className="hover:bg-sidebar-hover  focus:bg-transparent active:bg-transparent">
                         <item.icon className="text-foreground" />
-                        <span  className="text-sm text-foreground" >{item.title}</span>
+                        <span  className="text-base text-foreground" >{item.title}</span>
                       </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

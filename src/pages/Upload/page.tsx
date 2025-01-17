@@ -9,7 +9,6 @@ export default function UploadObject () {
     <LayoutSidebar>
         <PageTitle icon={Upload} main="Upload de Objetos Mulimídia" sub="Enviem suas mensagens, vídeos ou áudios rapidamente !"/>
         <UploadFiles />
-      
     </LayoutSidebar>
   )
 }

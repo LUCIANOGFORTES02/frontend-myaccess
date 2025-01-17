@@ -136,12 +136,10 @@ export function EditProfile() {
   };
 
   return (
-    <div className="flex flex-1 flex-col p-4 h-screen" >
+    <div className="flex flex-1 flex-col p-4 " >
       <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6 items-start ">
         {/* Card do Usuário */}
-        <div className="col-span-1 flex flex-col items-center p-6 rounded-lg shadow-lg"  
-          style={{ backgroundColor: '#21222D' }}
-          >
+        <div className="col-span-1 flex flex-col items-center p-6 rounded-lg shadow-lg border-gray-700 border">
           <Avatar className="border-4 border-accent shadow-lg w-32 h-32" >
             <AvatarImage 
               src={previewImage||user?.profileImage||"https://github.com/shadcn.png"}
@@ -162,7 +160,7 @@ export function EditProfile() {
             <DialogTrigger asChild>
               <button className="mt-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-green-600">Editar</button>
             </DialogTrigger>
-            <DialogContent className="p-6 bg-gray-800 rounded-lg shadow-lg">
+            <DialogContent className="p-6 bg-background rounded-lg shadow-lg">
               <DialogHeader>
                 <DialogTitle className="text-xl font-bold text-foreground">Editar Perfil</DialogTitle>
               </DialogHeader>
@@ -212,8 +210,7 @@ export function EditProfile() {
         </div>
 
         {/* Formulário de Edição */}
-        <div className="col-span-2 p-6 rounded-lg shadow-lg" 
-          style={{ backgroundColor: '#21222D' }}>
+        <div className="col-span-2 p-6 rounded-lg shadow-lg  border-gray-700 border" >
           <h1 className="text-2xl font-bold mb-6">Configurações do usuário</h1>
 
           {/* Detalhes do Usuário */}
