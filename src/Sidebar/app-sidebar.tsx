@@ -36,21 +36,21 @@ const items = [
     url: "/files",
     icon: Files,
   },
-  {
-    title: "Imagens",
-    url: "/image",
-    icon: Images ,
-  },
-  {
-    title: "Vídeos",
-    url: "#",
-    icon: FileVideo ,
-  },
-  {
-    title: "Áudios",
-    url: "#",
-    icon: FileAudio ,
-  },
+  // {
+  //   title: "Imagens",
+  //   url: "/image",
+  //   icon: Images ,
+  // },
+  // {
+  //   title: "Vídeos",
+  //   url: "#",
+  //   icon: FileVideo ,
+  // },
+  // {
+  //   title: "Áudios",
+  //   url: "#",
+  //   icon: FileAudio ,
+  // },
 
 ]
 

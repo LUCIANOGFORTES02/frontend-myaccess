@@ -6,6 +6,7 @@ interface ObjectListProps {
   data: {
     id: string;
     thumbnail: string; // URL da miniatura (imagem/vídeo)
+    type:string;
     title: string; 
     description: string; 
     tags: string; 

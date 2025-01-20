@@ -2,8 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { SlidersHorizontal } from 'lucide-react';
-import { Checkbox } from "@/components/ui/checkbox"
+import { SlidersHorizontal,Search } from 'lucide-react';
 import { useState } from 'react';
 
 interface FilterParams {
@@ -40,16 +39,22 @@ export default function SearchFiles({onFilterChange}:SearchFilesProps) {
   return (
     <div className='flex justify-center mt-8 gap-4'>
 
-        {/*Campo de Pesquisa */}
-        <div className='max-w-xl w-full'>
-            <Input 
-                type="text"
-                value={nameFilter}
-                onChange={(e)=>setNameFilter( e.target.value)}
-                placeholder='Digite o nome do arquivo'
-                />
+        {/* Campo de Pesquisa */}
+        <div className="flex gap-4">
+                <div className="max-w-xl w-full">
+                    <Input
+                        type="text"
+                        value={nameFilter}
+                        onChange={(e) => setNameFilter(e.target.value)}
+                        placeholder="Digite o nome do arquivo"
+                    />
+                </div>
 
-        </div>
+                {/* Botão Aplicar Filtros */}
+                <Button onClick={handleFilter} >
+                    <Search />
+                </Button>
+            </div>
 
 
         {/* FIltro */}

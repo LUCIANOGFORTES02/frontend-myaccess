@@ -1,10 +1,12 @@
 import { Separator } from '@radix-ui/react-separator';
-import { Eye,Trash} from 'lucide-react';
+import { Pencil,Trash} from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface ObjectCardProps {
     data:{
         id: string;
         thumbnail: string; // URL da miniatura (imagem/vídeo)
+        type:string;
         title: string; 
         description: string; 
         tags: string; 
@@ -12,6 +14,27 @@ interface ObjectCardProps {
 }
 
 export default function ObjectCard ({data} : ObjectCardProps) {
+  const navigate = useNavigate();
+
+  const handleEdit =()=>{ //Ir para as páginas de editar 
+    switch(data.type){
+      case 'jpeg':
+        navigate(`/edit/image/${data.id}`);
+        break;
+      case 'mp4':
+        navigate(`/edit/video/${data.id}`);
+        break;
+      case 'MP3':
+        navigate(`/edit/audio/${data.id}`);
+        break;
+      default:
+        console.warn('Tipo de arquivo não suportado para edição.');
+    }
+
+  }
+
+
+
 
     
   return (
@@ -31,20 +54,21 @@ export default function ObjectCard ({data} : ObjectCardProps) {
       <div className="flex flex-col flex-grow p-4">
         <h3 className="text-lg font-bold">{data.title}</h3>
         <p className="text-sm text-gray-600">{data.description} </p>
+        {/* <p className="text-sm text-gray-500 mt-2">Type: {data.type} </p> */}
         <p className="text-sm text-gray-500 mt-2">Tags:  {data.tags}</p>
       </div>
 
       {/* Ações */}
       <div className="flex flex-col justify-center items-center p-4 gap-2">
         <button
-          onClick={() =>{}}
-          className="text-black hover:underline  rounded-lg bg-blue-600"
+          onClick={handleEdit}
+          className="p-1 text-black hover:underline  rounded-md bg-blue-400"
         >
-            <Eye />
+            <Pencil />
         </button>
         <button
         onClick={() => {}}
-          className="text-white bg-red-500 rounded-lg hover:underline"
+          className="p-1   bg-red-500 rounded-md hover:underline"
         >
             <Trash />
         </button>
