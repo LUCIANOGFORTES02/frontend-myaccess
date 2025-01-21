@@ -40,6 +40,7 @@ export default function UploadArea() {
   //Executada quando os arquivos são selecionados
   const handleFileSelect =async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
+    console.log("Files selected:", e.target.files);
     for(const file of files){
       const newFile:any = {
         name: file.name,
@@ -107,10 +108,13 @@ export default function UploadArea() {
 
   //Upload do arquivo
   const uploadFile = async (file: File, fileData: any) => {
+    console.log("Uploading file:", fileData.name);
     const UploadData = new FormData();
-    UploadData.append("file", file);
-    UploadData.append("name", fileData.name);
-    UploadData.append("size", fileData.size.toString());
+    UploadData.append("file", file); // File to upload
+    UploadData.append("name", fileData.name); // Name of the file
+    UploadData.append("size", fileData.size.toString()); // File size
+    UploadData.append("title", fileData.name); // Title (use the file name as the title)
+    UploadData.append("type", file.type); // File type (e.g., "image/png")
     if (fileData.thumbnail) {
       UploadData.append("thumbnail", fileData.thumbnail);
     }
@@ -158,11 +162,11 @@ export default function UploadArea() {
                         Browse
                         </button>
                         <input
-                        type="file"
-                        ref={fileInputRef}
-                        className="hidden"
-                        multiple
-                        onChange={ handleFileSelect}
+                          type="file"
+                          ref={fileInputRef}
+                          className="hidden"
+                          multiple
+                          onChange={ handleFileSelect}
                         />
                     </div>
             </div>
