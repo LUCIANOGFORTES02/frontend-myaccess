@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { mediaService } from "@/api/mediaService";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 interface Video {
   fileName: string;       // Nome do arquivo enviado
@@ -31,38 +33,63 @@ interface Video {
 
 
 export default function EditVideo() {
+  const { id } = useParams<{ id: string }>();
+
+  const defaultVideo: Video = {
+    fileName: '',         // Nome do arquivo enviado
+    fileSize: '0 bytes',  // Tamanho do arquivo (pode usar uma string legível)
+    uploadDate: '',       // Data e hora do upload do arquivo
+    mimeType: '',         // Tipo MIME do vídeo
+  
+    duration: '0:00',     // Duração do vídeo (ex.: "0:00")
+    resolution: '',       // Resolução do vídeo (ex.: "1920x1080")
+    frameRate: '',        // Taxa de quadros por segundo (ex.: "30 FPS")
+    videoCodec: '',       // Codec de vídeo (ex.: "H.264")
+    audioCodec: '',       // Codec de áudio (ex.: "AAC")
+    bitRate: '0 kbps',    // Taxa de bits combinada (ex.: "4500 kbps")
+    thumbnail: '',        // Caminho ou URL da miniatura gerada
+  
+    description: '',      // Descrição textual fornecida pelo usuário
+    tags: [],             // Lista de palavras-chave ou rótulos atribuídos
+    genre: '',            // Categoria de gênero do vídeo
+  };
 
   // Estados para armazenar as propriedades do vídeo
-  const [videoProperties, setVideoProperties] = useState<Video>({
-    fileName: "example.mp4",
-    fileSize: "2.3 MB",
-    uploadDate: "2025-01-19",
-    mimeType: "video/mp4",
-    duration: "2:15",
-    resolution: "1920x1080",
-    frameRate: "30 FPS",
-    videoCodec: "H.264",
-    audioCodec: "AAC",
-    bitRate: "4500 kbps",
-    thumbnail: "/path/to/thumbnail.jpg", // Caminho da miniatura gerada
-  });
+  const [video, setVideo] = useState<Video>(defaultVideo);
 
-  const [userDefinedProperties, setUserDefinedProperties] = useState({
-    description:"",
-    tags: "",
-    genre: "",
+  const [userDefinedProperties, setUserDefinedProperties] = useState<Video>(defaultVideo);
 
-  })
+      useEffect(()=>{
+          const loadMedia = async () =>{
+            try{
+              if (id){
+                const data = await mediaService.fetchMediaById(id);
+                setVideo(data);
+                setUserDefinedProperties(data);
+      
+              }
+            } catch (err) {
+              console.error("Erro ao carregar os dados da mídia.");
+            } 
+          };
+          loadMedia();
+      
+        },[id]);
 
   const handleChange = (field:keyof Video , value:any)=>{
-    setUserDefinedProperties((prev)=>({
-      ...prev,
-      [field]:value,
+    if(!userDefinedProperties)return;
+    setUserDefinedProperties((prev) => ({
+      ...prev!,
+      [field]: value,
     }));
+  };
 
+  const handleSave = () => {
+    if (userDefinedProperties){
+      setVideo(userDefinedProperties)
+      
+    }
   }
-
-
 
   return (
     <div className="flex justify-center items-center  ">
@@ -75,7 +102,7 @@ export default function EditVideo() {
               <label htmlFor="" > Nome do Arquivo: </label>
               <input
                   type="text"
-                  value={videoProperties.fileName}
+                  value={video?.fileName || ""}
                   readOnly
                   className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
                 />        
@@ -84,7 +111,7 @@ export default function EditVideo() {
               <label htmlFor=""> Tamanho do arquivo:</label>
               <input
                   type="text"
-                  value={`${videoProperties.fileSize}. bytes`}
+                  value={`${video?.fileSize}. bytes` || ""}
                   readOnly
                   className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
                 />
@@ -93,7 +120,7 @@ export default function EditVideo() {
               <label htmlFor="">Data de Upload:</label>
               <input
                   type="text"
-                  value={videoProperties.uploadDate}
+                  value={video?.uploadDate || ""}
                   readOnly
                 className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
                 />
@@ -102,7 +129,7 @@ export default function EditVideo() {
               <label htmlFor="">Tipo MINE:  </label>
               <input
                   type="text"
-                  value={videoProperties.mimeType}
+                  value={video?.mimeType || ""}
                   readOnly
                   className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
                 />
@@ -111,7 +138,7 @@ export default function EditVideo() {
                   <label htmlFor="">Duração: </label>
                   <input
                   type="text"
-                  value={videoProperties.duration}
+                  value={video?.duration || ""}
                   readOnly
                   className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
                 /> 
@@ -120,7 +147,7 @@ export default function EditVideo() {
                   <label htmlFor="">Resolução: </label>
                   <input
                   type="text"
-                  value={videoProperties.resolution}
+                  value={video?.resolution || ""}
                   readOnly
                   className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
                 />              
@@ -130,7 +157,7 @@ export default function EditVideo() {
               <label htmlFor=""> Taxa de quadros  </label>
               <input
                   type="text"
-                  value={videoProperties.frameRate}
+                  value={video?.frameRate || ""}
 
                   readOnly
                   className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
@@ -140,7 +167,7 @@ export default function EditVideo() {
               <label htmlFor=""> Codec de vídeo</label>
               <input
                   type="text"
-                  value={videoProperties.videoCodec}
+                  value={video?.videoCodec || ""}
 
                   readOnly
                   className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
@@ -151,7 +178,7 @@ export default function EditVideo() {
               <label htmlFor=""> Codec de aúdio</label>
               <input
                   type="text"
-                  value={videoProperties.audioCodec}
+                  value={video?.audioCodec || ""}
 
                   readOnly
                   className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
@@ -162,7 +189,7 @@ export default function EditVideo() {
               <label htmlFor=""> Taxa de bits</label>
               <input
                   type="text"
-                  value={videoProperties.bitRate}
+                  value={video?.bitRate || ""}
 
                   readOnly
                   className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
@@ -173,7 +200,7 @@ export default function EditVideo() {
               <label htmlFor=""> Thumbnail</label>
               <input
                   type="text"
-                  value={videoProperties.thumbnail}
+                  value={video?.thumbnail || ""}
 
                   readOnly
                   className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
@@ -191,7 +218,7 @@ export default function EditVideo() {
             <div className=''>
                 <label htmlFor="description"> Descrição:  </label>
                 <textarea
-                  value={userDefinedProperties.description}
+                  value={userDefinedProperties.description || ""}
                   name="description"
                   onChange={(e) => handleChange("description",e.target.value)}
                   className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
@@ -212,7 +239,7 @@ export default function EditVideo() {
             <label htmlFor="">Gênero:</label>
             <input
               type="text"
-              value={userDefinedProperties.genre}
+              value={userDefinedProperties.genre || ""}
               onChange={(e) => handleChange("genre", e.target.value)}
               className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
             />
@@ -229,7 +256,7 @@ export default function EditVideo() {
             <h2 className="text-2xl font-semibold">Miniatura Gerada</h2>
             <div className="mt-4">
               <img
-                src={videoProperties.thumbnail}
+                src={video?.thumbnail || ""}
                 alt="Miniatura do vídeo"
                 className="w-48 h-48 rounded-md object-cover border border-gray-600"
               />

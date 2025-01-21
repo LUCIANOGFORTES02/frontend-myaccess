@@ -21,31 +21,33 @@ interface Image {
   tags: string[],
 };
 
-// Simulação de dados de imagem
-// const imageData = {
-//   name: 'foto_example.jpg',
-//   size: 204800,
-//   uploadDate: '2025-01-17 14:32',
-//   mimeType: 'image/jpeg',
-//   dimensions: { width: 1920, height: 1080 },
-//   colorDepth: 24,
-//   resolution: 300,
-//   exifData: {
-//     cameraModel: 'Canon EOS 80D',
-//     exposureTime: '1/250',
-//     dateTime: '2025-01-17 14:00',
-//     gpsLocation: '37.7749° N, 122.4194° W',
-//   },
-//   description: 'Uma bela paisagem no pôr do sol.',
-//   tags: ['paisagem', 'pôr do sol'],
-// };
 
 export default function EditImage() {
 
+  const defaultImage: Image = {
+    name: '',
+    size: 0,
+    uploadDate: '',
+    mimeType: '',
+    dimensions: { width: 0, height: 0 },
+    colorDepth: 0,
+    resolution: 0,
+    exifData: {
+      cameraModel: '',
+      exposureTime: '',
+      dateTime: '',
+      gpsLocation: '',
+    },
+    description: '',
+    tags: [],
+  };
+
+
+
   const { id } = useParams<{id:string}>();//Capturar o id da imagem
 
-  const [image,setImage] = useState<Image|null>(null)
-  const [userDefinedProperties,setUserDefinedProperties] = useState<Image|null>(null)
+  const [image,setImage] = useState<Image>(defaultImage)
+  const [userDefinedProperties,setUserDefinedProperties] = useState<Image>(defaultImage)
 
   useEffect(()=>{
     const loadMedia = async () =>{
@@ -90,7 +92,7 @@ export default function EditImage() {
                 <label htmlFor="" > Nome do Arquivo: </label>
                 <input
                     type="text"
-                    value={image?.name}
+                    value={image?.name || ''}
                     readOnly
                     className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
                   />        
@@ -99,7 +101,7 @@ export default function EditImage() {
                 <label htmlFor=""> Tamanho do arquivo:</label>
                 <input
                     type="text"
-                    value={`${image?.size}. bytes`}
+                    value={`${image?.size}. bytes` || ''}
                     readOnly
                     className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
                   />
@@ -108,7 +110,7 @@ export default function EditImage() {
                 <label htmlFor="">Data de Upload:</label>
                 <input
                     type="text"
-                    value={image?.uploadDate}
+                    value={image?.uploadDate || ''}
                     readOnly
                   className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
                   />
@@ -117,7 +119,7 @@ export default function EditImage() {
                 <label htmlFor="">Tipo MINE:  </label>
                 <input
                     type="text"
-                    value={image?.mimeType}
+                    value={image?.mimeType|| ''}
                     readOnly
                     className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
                   />
@@ -128,14 +130,14 @@ export default function EditImage() {
                     <label htmlFor="">Altura: </label>
                     <input
                     type="text"
-                    value={image?.dimensions.height}
+                    value={image?.dimensions?.height || ''}
                     readOnly
                     className="w-full p-2 rounded-md bg-gray-600 text-gray-300focus:outline-none"
                   />                <label htmlFor="">Largura: </label>
 
                     <input
                     type="text"
-                    value={image?.dimensions.width}
+                    value={image?.dimensions?.width || ''}
                     readOnly
                     className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
                   />              
@@ -146,19 +148,22 @@ export default function EditImage() {
                 <label htmlFor=""> Resolução  </label>
                 <input
                     type="text"
+                    value={image?.resolution || ''}
+
                     readOnly
                     className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
                   />
             </div>
-            <div>
+            {/* <div>
                 <label htmlFor=""> Dados Exif  </label>
                 <input
                     type="text"
+                    value={image?.exifData || ''}
                     readOnly
                     className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
                   />
 
-            </div>
+            </div> */}
             </div>
             {/* Pode realizar edição */}
 

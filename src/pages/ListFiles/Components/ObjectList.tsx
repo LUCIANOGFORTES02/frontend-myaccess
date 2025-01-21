@@ -15,22 +15,20 @@ interface ObjectListProps {
 }
 
 
-export default function ObjectList({data}:ObjectListProps) {
+export default function ObjectList({data = [] }:ObjectListProps) {
+  if (!data || data.length === 0) {
+    return (
+      <p className="text-gray-500 text-center mt-4">
+        Nenhum item encontrado.
+      </p>
+    );
+  }
+
   return (
     <div className="flex flex-col p-4">
-          {data.length > 0 ? (
-            data.map((item) => (
-              <ObjectCard
-                key={item.id}
-                data={item}
-
-              />
-            ))
-          ) : (
-            <p className="text-gray-500 text-center mt-4">
-              Nenhum item encontrado.
-            </p>
-          )}
-        </div>
-  )
+      {data.map((item) => (
+        <ObjectCard key={item.id} data={item} />
+      ))}
+    </div>
+  );
 }

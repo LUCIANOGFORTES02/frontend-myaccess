@@ -8,7 +8,6 @@ import { useState } from 'react';
 interface FilterParams {
     type:string;
     name: string,
-    description: string;
     tags: string;
 }
 
@@ -20,7 +19,6 @@ export default function SearchFiles({onFilterChange}:SearchFilesProps) {
 
     const [selectedType,setSelectedTypes]= useState<string>("")//Tipo do arquivo
     const [nameFilter, setNameFilter] = useState<string>('');
-    const [descriptionFilter, setDescriptionFilter] = useState<string>('');
     const [tagsFilter, setTagsFilter] = useState<string>("");
 
 
@@ -28,7 +26,6 @@ export default function SearchFiles({onFilterChange}:SearchFilesProps) {
         onFilterChange({ 
             type: selectedType, 
             name: nameFilter,
-            description: descriptionFilter,
             tags: tagsFilter,
         })
 
@@ -98,7 +95,7 @@ export default function SearchFiles({onFilterChange}:SearchFilesProps) {
                             Tags
                             </Label>
                             <Input 
-                                id="username" 
+                                id="tagsFilter" 
                                 value={tagsFilter}
                                 onChange={(e)=>{setTagsFilter(e.target.value)}}
                                 className="col-span-3" />

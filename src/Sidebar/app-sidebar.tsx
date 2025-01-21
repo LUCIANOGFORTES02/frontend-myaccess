@@ -19,6 +19,7 @@ import { DropdownMenu } from "@radix-ui/react-dropdown-menu"
 import { AuthContext } from "@/auth/AuthContext"
 import { useContext } from "react"
 
+
 // Menu items.
 const items = [
   {
@@ -80,12 +81,12 @@ export function AppSidebar() {
                         </Avatar>
                     </div>
                   {/* Saudação ao usuário */}
-                  <a href="/editprofile" className="">
+                  {/* <a href="/editprofile" className=""> */}
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       <span className="truncate font-semibold text-foreground">Olá </span>
                       <span className="truncate text-xs text-foreground">{user?.name}</span>
                     </div>
-                  </a>
+                  {/* </a> */}
                   </SidebarMenuButton>
                   </Link>
 
@@ -109,10 +110,10 @@ export function AppSidebar() {
                 {items.map((item) => (
                   <SidebarMenuItem key={item.title}  >
                     <SidebarMenuButton asChild className="hover:bg-sidebar-hover  "  >
-                      <a  href={item.url} className="hover:bg-sidebar-hover  focus:bg-transparent active:bg-transparent">
+                      <Link  to={item.url} className="hover:bg-sidebar-hover  focus:bg-transparent active:bg-transparent">
                         <item.icon className="text-foreground" />
                         <span  className="text-base text-foreground" >{item.title}</span>
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}

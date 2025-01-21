@@ -16,27 +16,28 @@ interface Audio {
   genre: string,
 };
 
-// Simulação de dados de áudio
-// const audioData: Audio = {
-//     name: 'audio_example.mp3',
-//     size: 5120000,
-//     uploadDate: '2025-01-17 14:32',
-//     mimeType: 'audio/mpeg',
-//     duration: 180,
-//     bitRate: 320,
-//     sampleRate: 44100,
-//     channels: 'Stereo',
-//     description: 'Uma narração interessante.',
-//     tags: ['narracao', 'podcast'],
-//     genre: 'Podcast',
-//   };
+
 
 export default function EditAudio() {
       const { id } = useParams<{id:string}>();//Capturar o id da imagem
+
+      const defaultAudio: Audio = {
+        name: '',
+        size: 0,
+        uploadDate: '',
+        mimeType: '',
+        duration: 0,
+        bitRate: 0,
+        sampleRate: 0,
+        channels: '',
+        description: '',
+        tags: [],
+        genre: '',
+      };
     
 
-    const [audio, setAudio] = useState<Audio|null>(null);
-    const [userDefinedProperties, setUserDefinedProperties] = useState<Audio|null>(null);
+    const [audio, setAudio] = useState<Audio>(defaultAudio);
+    const [userDefinedProperties, setUserDefinedProperties] = useState<Audio>(defaultAudio);
   
     useEffect(()=>{
         const loadMedia = async () =>{
@@ -81,7 +82,7 @@ export default function EditAudio() {
             <label htmlFor="">Nome do Arquivo:</label>
             <input
               type="text"
-              value={audio?.name}
+              value={audio?.name || ''}
               readOnly
               className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
             />
@@ -90,7 +91,7 @@ export default function EditAudio() {
             <label htmlFor="">Tamanho do Arquivo:</label>
             <input
               type="text"
-              value={`${audio?.size} bytes`}
+              value={`${audio?.size} bytes`|| ''}
               readOnly
               className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
             />
@@ -99,7 +100,7 @@ export default function EditAudio() {
             <label htmlFor="">Data de Upload:</label>
             <input
               type="text"
-              value={audio?.uploadDate}
+              value={audio?.uploadDate || ''}
               readOnly
               className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
             />
@@ -108,7 +109,7 @@ export default function EditAudio() {
             <label htmlFor="">Tipo MIME:</label>
             <input
               type="text"
-              value={audio?.mimeType}
+              value={audio?.mimeType || ''}
               readOnly
               className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
             />
@@ -117,7 +118,7 @@ export default function EditAudio() {
             <label htmlFor="">Duração:</label>
             <input
               type="text"
-              value={`${audio?.duration} segundos`}
+              value={`${audio?.duration || ''} segundos`}
               readOnly
               className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
             />
@@ -126,7 +127,7 @@ export default function EditAudio() {
             <label htmlFor="">Taxa de Bits:</label>
             <input
               type="text"
-              value={`${audio?.bitRate} kbps`}
+              value={`${audio?.bitRate} kbps` || ''}
               readOnly
               className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
             />
@@ -135,7 +136,7 @@ export default function EditAudio() {
             <label htmlFor="">Taxa de Amostragem:</label>
             <input
               type="text"
-              value={`${audio?.sampleRate} Hz`}
+              value={`${audio?.sampleRate} Hz` || ''}
               readOnly
               className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
             />
@@ -144,7 +145,7 @@ export default function EditAudio() {
             <label htmlFor="">Canais:</label>
             <input
               type="text"
-              value={audio?.channels}
+              value={audio?.channels || ''}
               readOnly
               className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
             />
@@ -159,7 +160,7 @@ export default function EditAudio() {
           <div>
             <label htmlFor="">Descrição:</label>
             <textarea
-              value={userDefinedProperties?.description}
+              value={userDefinedProperties?.description || ''}
               onChange={(e) => handleChange("description", e.target.value)}
               className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
             />
@@ -169,7 +170,7 @@ export default function EditAudio() {
             <input
               type="text"
               placeholder="Adicione tags separadas por vírgula"
-              value={userDefinedProperties?.tags.join(", ")}
+              value={Array.isArray(userDefinedProperties?.tags) ? userDefinedProperties.tags.join(", ") : ''}
               onChange={(e) => handleChange("tags", e.target.value.split(","))}
               className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
             />
@@ -178,7 +179,7 @@ export default function EditAudio() {
             <label htmlFor="">Gênero:</label>
             <input
               type="text"
-              value={userDefinedProperties?.genre}
+              value={userDefinedProperties?.genre || ''}
               onChange={(e) => handleChange("genre", e.target.value)}
               className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
             />

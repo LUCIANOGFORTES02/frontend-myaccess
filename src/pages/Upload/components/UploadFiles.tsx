@@ -4,7 +4,8 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { UploadService } from '@/api/uploadService';
 
 type UploadedFile = {
-  name: string;
+  title: string;
+  type:string;
   size: number;
   status: "Uploading" | "Completed" | "Error";
   progress: number;
@@ -15,17 +16,7 @@ type UploadedFile = {
 export default function UploadArea() {
     const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
 
-  const TestUploadedFiles = [
-    { name: "file1.jpg", size: 500000, status: "Completed", progress: 100 },
-    { name: "document.pdf", size: 2000000, status: "Completed", progress: 100 },
-    { name: "presentation.pptx", size: 750000, status: "Completed", progress: 100 },
-    { name: "spreadsheet.xlsx", size: 300000, status: "Completed", progress: 100 },
-    { name: "archive.zip", size: 4500000, status: "Uploading", progress: 75 },
-    { name: "code.js", size: 10000, status: "Uploading", progress: 50 },
-    { name: "video.mp4", size: 20000000, status: "Uploading", progress: 30 },
-    { name: "audio.mp3", size: 5000000, status: "Completed", progress: 100 },
 
-  ];
   
 
   //Referência para o input de arquivos (usado para simular clique no input)
@@ -39,10 +30,16 @@ export default function UploadArea() {
 
   //Executada quando os arquivos são selecionados
   const handleFileSelect =async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const supportedFormats = ["image/jpeg", "image/png", "video/mp4", "audio/mp3, image/svg", "video/avi", "video/mov", "audio/wav"];
     const files = Array.from(e.target.files || []);
     for(const file of files){
-      const newFile:any = {
-        name: file.name,
+      if (!supportedFormats.includes(file.type)) {
+        alert(`${file.name} não é um formato suportado.`);
+        continue;
+      }
+      const newFile:UploadedFile = {
+        title: file.name, // Usando o nome do arquivo como título inicial
+        type: file.type.split("/")[0], // "image", "video", "audio", etc.
         size: file.size,
         status: "Uploading",
         progress: 0,
@@ -109,24 +106,27 @@ export default function UploadArea() {
   const uploadFile = async (file: File, fileData: any) => {
     const UploadData = new FormData();
     UploadData.append("file", file);
-    UploadData.append("name", fileData.name);
-    UploadData.append("size", fileData.size.toString());
+    UploadData.append("title", fileData.title); // Usando o nome do arquivo como título inicial
+    UploadData.append("description", ""); // Ajuste conforme necessário
+    UploadData.append("tags", "");
+    UploadData.append("type", file.type); // Exemplo: "image", "video", "audio"
     if (fileData.thumbnail) {
       UploadData.append("thumbnail", fileData.thumbnail);
     }
 
     try {
       const response = await UploadService.uploadFile(UploadData);
+      console.log(response)
 
       setUploadedFiles((prev) =>
         prev.map((f) =>
-          f.name === fileData.name ? { ...f, status: "Completed", progress: 100 } : f
+          f.title === fileData.title ? { ...f, status: "Completed", progress: 100 } : f
         )
       );
     } catch (error) {
       console.error("Erro no upload:", error);
       setUploadedFiles((prev) =>
-        prev.map((f) => (f.name === fileData.name ? { ...f, status: "Error" } : f))
+        prev.map((f) => (f.title === fileData.name ? { ...f, status: "Error" } : f))
       );
     }
   };
@@ -169,19 +169,19 @@ export default function UploadArea() {
         </div>
         {/* Lista de Uploads */}
         <div className="col-span-2 flex flex-col  ">
-              {TestUploadedFiles.length > 0  && (
+              {uploadedFiles.length > 0  && (
               <ScrollArea className="h-[32rem]  rounded-md  border border-gray-500   shadow-lg ">
                 <h4 className="px-4 py-2 text-xl font-semibold  text-left ">Upload</h4>
 
                 <ul className="space-y-4 border-gray-700 p-4">
-                {TestUploadedFiles.map((file, index) => (
+                {uploadedFiles.map((file, index) => (
                   <li
                     key={index}
                     className="p-4 bg-gray-700 rounded-lg shadow-md flex flex-col"
                     >
                     <div className="flex justify-between items-center">
                         <div>
-                        <span className="font-medium text-foreground">{file.name}</span>
+                        <span className="font-medium text-foreground">{file.title}</span>
                         <p className="text-sm text-foreground">{(file.size / 1024).toFixed(2)} KB</p>
                         </div>
                         <span className="text-sm font-medium text-blue-400">
@@ -192,8 +192,16 @@ export default function UploadArea() {
                       <div
                         className="bg-blue-500 h-2 rounded-full"
                         style={{ width: `${file.progress}%` }}
-                      ></div>
+                      >
+                      </div>
                     </div>
+                    {file.thumbnail && (
+                    <img
+                      src={file.thumbnail}
+                      alt="thumbnail"
+                      className="mt-2 max-w-[100px] max-h-[100px] rounded-lg"
+                    />
+                  )}
                   </li>
                 ))}
                 </ul>
