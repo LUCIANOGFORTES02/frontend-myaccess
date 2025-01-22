@@ -26,7 +26,7 @@ interface Video {
 
   // Propriedades definidas pelo usuário
   description?: string;   // Descrição textual fornecida pelo usuário
-  tags?: string[];        // Lista de palavras-chave ou rótulos atribuídos
+  tags: string;        // Lista de palavras-chave ou rótulos atribuídos
   genre?: string;         // Categoria de gênero do vídeo
   title?: string; 
 }
@@ -50,7 +50,7 @@ export default function EditVideo() {
     thumbnail: '',        // Caminho ou URL da miniatura gerada
   
     description: '',      // Descrição textual fornecida pelo usuário
-    tags: [],             // Lista de palavras-chave ou rótulos atribuídos
+    tags: '',             // Lista de palavras-chave ou rótulos atribuídos
     genre: '',            // Categoria de gênero do vídeo
   };
 
@@ -89,7 +89,7 @@ export default function EditVideo() {
         const data = await mediaService.updateMediaById(id, {
           title: userDefinedProperties.title,
           description: userDefinedProperties.description,
-          tags: userDefinedProperties?.tags,
+          tags: userDefinedProperties?.tags.toString(),
         });
 
         setVideo(data);

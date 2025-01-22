@@ -18,7 +18,7 @@ interface Image {
   },
   description: string,
   title: string,
-  tags: string[],
+  tags: string,
 };
 
 
@@ -39,7 +39,7 @@ export default function EditImage() {
     },
     description: '',
     title: '',
-    tags: [],
+    tags: '',
   };
 
   const { id } = useParams<{id:string}>();//Capturar o id da imagem
@@ -74,13 +74,11 @@ export default function EditImage() {
 
   const handleUpdate = async () => {
     try{
-      console.log('teste')
-      console.log(userDefinedProperties)
       if (id) {
         const data = await mediaService.updateMediaById(id, {
           title: userDefinedProperties.title,
           description: userDefinedProperties.description,
-          tags: userDefinedProperties?.tags,
+          tags: userDefinedProperties?.tags.toString(),
         });
 
         setImage(data);

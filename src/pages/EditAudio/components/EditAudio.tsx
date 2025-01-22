@@ -13,7 +13,7 @@ interface Audio {
   channels: string,
   description: string,
   title: string,
-  tags: string[],
+  tags: string,
   genre: string,
 };
 
@@ -33,7 +33,7 @@ export default function EditAudio() {
         channels: '',
         description: '',
         title: '',
-        tags: [],
+        tags: '',
         genre: '',
       };
     
@@ -72,7 +72,7 @@ export default function EditAudio() {
             const data = await mediaService.updateMediaById(id, {
               title: userDefinedProperties.title,
               description: userDefinedProperties.description,
-              tags: userDefinedProperties?.tags,
+              tags: userDefinedProperties?.tags?.toString(),
             });
     
             setAudio(data);
@@ -113,7 +113,7 @@ export default function EditAudio() {
             <input
               type="text"
               placeholder="Adicione tags separadas por vírgula"
-              value={Array.isArray(userDefinedProperties?.tags) ? userDefinedProperties.tags.join(", ") : ''}
+              value={userDefinedProperties?.tags}
               onChange={(e) => handleChange("tags", e.target.value.split(","))}
               className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
             />

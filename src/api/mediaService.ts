@@ -74,8 +74,6 @@ export const mediaService = {
             }
           });
 
-          console.log(updatedData);
-
           return response.data; 
         } catch (error) {
           console.error("Erro ao buscar atualizar a mídia:", error);
