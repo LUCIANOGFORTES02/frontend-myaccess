@@ -7,7 +7,7 @@ export  function Dashboard() {
   const { user } = useContext(AuthContext);
 
   return (
-        <div className="flex flex-1 flex-col gap-4 py-8 px-4 ">
+        <div className="flex  h-screen flex-1 flex-col gap-4 py-8 px-4 ">
           <div className="flex flex-wrap justify-between"> 
             <Stat title="Imagens" value={user?.media.image || 0} icon={FileImage }/>
             <Stat title="Vídeos" value={user?.media.video || 0} icon={FileVideo }/>

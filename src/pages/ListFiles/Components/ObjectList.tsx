@@ -25,7 +25,7 @@ export default function ObjectList({data = [] }:ObjectListProps) {
   }
 
   return (
-    <div className="flex flex-col p-4">
+    <div className="flex h-screen flex-col p-4">
       {data.map((item) => (
         <ObjectCard key={item.id} data={item} />
       ))}
