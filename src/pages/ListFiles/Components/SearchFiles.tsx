@@ -13,10 +13,9 @@ interface FilterParams {
 
 interface SearchFilesProps {
     onFilterChange: (filters: FilterParams) => void; // Define o tipo da função de callback
-  }
+}
 
 export default function SearchFiles({onFilterChange}:SearchFilesProps) {
-
     const [selectedType,setSelectedTypes]= useState<string>("")//Tipo do arquivo
     const [nameFilter, setNameFilter] = useState<string>('');
     const [tagsFilter, setTagsFilter] = useState<string>("");
@@ -28,14 +27,10 @@ export default function SearchFiles({onFilterChange}:SearchFilesProps) {
             name: nameFilter,
             tags: tagsFilter,
         })
-
     }
 
-
-    
   return (
     <div className='flex justify-center mt-8 gap-4'>
-
         {/* Campo de Pesquisa */}
         <div className="flex gap-4">
                 <div className="max-w-xl w-full">
@@ -52,7 +47,6 @@ export default function SearchFiles({onFilterChange}:SearchFilesProps) {
                     <Search />
                 </Button>
             </div>
-
 
         {/* FIltro */}
         <div>
@@ -82,9 +76,9 @@ export default function SearchFiles({onFilterChange}:SearchFilesProps) {
                                 onChange={(e)=> setSelectedTypes(e.target.value)}
                                 className='col-span-3 bg-background rounded-md border border-input lex h-10 w-full '>
                                 <option value="">Todos</option>
-                                <option value="imagens">Imagens</option>
-                                <option value="videos">Vídeos</option>
-                                <option value="audios">Áudios</option>
+                                <option value="image">Imagens</option>
+                                <option value="video">Vídeos</option>
+                                <option value="audio">Áudios</option>
                             </select>
 
                             

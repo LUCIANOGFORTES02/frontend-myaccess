@@ -1,4 +1,4 @@
-export type User={
+export type User = {
     id: string;
     name: string;
     username: string;
@@ -7,6 +7,9 @@ export type User={
     description:string;
     profileImage:string
     confirmPassword?: string;
-
-
+    media: {
+        audio: number,
+        video: number,
+        image: number,
+    }
 }

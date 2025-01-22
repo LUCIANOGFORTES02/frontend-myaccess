@@ -1,6 +1,10 @@
 import { Separator } from '@radix-ui/react-separator';
 import { Pencil,Trash} from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { mediaService } from '@/api/mediaService';
+import { AuthContext } from '../../../auth/AuthContext';
+import { User } from '../../../types/User';
+import { useContext } from 'react';
 
 interface ObjectCardProps {
     data:{
@@ -15,7 +19,8 @@ interface ObjectCardProps {
 
 export default function ObjectCard ({data} : ObjectCardProps) {
   const navigate = useNavigate();
-
+  const { user, saveUserInfos } = useContext(AuthContext)
+  
    const handleEdit =()=>{ //Ir para as páginas de editar 
       if (data.type.startsWith('image')) {
         navigate(`/edit/image/${data.id}`);
@@ -32,10 +37,19 @@ export default function ObjectCard ({data} : ObjectCardProps) {
     navigate(`/view/${data.id}`); // Navega para a página de visualização
   };
 
+  const deleteMedia = async (mediaId: string) => {
+    await mediaService.deleteMediaById(mediaId);
+
+    const mediaQuantity = await mediaService.getUserMediaCount();
+    saveUserInfos({
+      ...user,
+      media: mediaQuantity
+    } as User);
+
+    navigate(0); 
+  }
     
   return (
-
-
     <div className=' flex shadow-lg rounded-lg overflow-hidden border border-gray-700 mb-4 p-2'>
         {/* Miniatura */}
         <div className="flex-shrink-0"
@@ -70,7 +84,7 @@ export default function ObjectCard ({data} : ObjectCardProps) {
           <Pencil />
         </button>
         <button
-          onClick={() => { }}
+          onClick={async () => await deleteMedia(data.id)}
           className="p-1 bg-red-500 rounded-md hover:underline"
         >
           <Trash />
