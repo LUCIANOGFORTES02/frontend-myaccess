@@ -51,11 +51,17 @@ export default function ObjectCard ({data} : ObjectCardProps) {
         <div className="flex-shrink-0"
        
         >
-            <img
-            src={data.link}
-            alt={data.title}
-            className="h-24 w-24 object-cover"
-            />
+            {data.type == 'image' && (<img
+              src={data.link}
+              alt={data.title}
+              className="h-24 w-24 object-cover"
+            />)}
+
+            {data.type == 'audio' || data.type == 'video'&& (<img
+              src={"https://img.icons8.com/ios7/200/FFFFFF/youtube-play.png"}
+              alt={data.title}
+              className="h-24 w-24 object-cover"
+            />)}
       </div>
       <Separator className='w-px h-auto bg-gray-700 mx-2'/>
       {/* Textos */}
