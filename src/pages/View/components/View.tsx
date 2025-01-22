@@ -8,6 +8,7 @@ interface FileDetailsData {
     thumbnail: string; // URL da miniatura
     type: string;
     title: string;
+    link: string;
     description: string;
     tags: string;
   }
@@ -31,6 +32,7 @@ export default function View() {
         const data = await mediaService.fetchMediaById(id!); // Busca os dados pelo ID
         setFileData(data);
       } catch (error) {
+        console.log("Erro ao carregar os detalhes do arquivo", error);
         setError('Erro ao carregar os detalhes do arquivo.');
       } finally {
         setLoading(false);
@@ -51,11 +53,17 @@ export default function View() {
         <div className="flex shadow-lg rounded-lg overflow-hidden border border-gray-700">
           {/* Miniatura */}
           <div className="flex-shrink-0">
-            <img
-              src={fileData.thumbnail}
+            {fileData.type == 'image' && (<img
+              src={fileData.link}
               alt={fileData.title}
               className="h-64 w-64 object-cover"
-            />
+            />)}
+
+            {fileData.type == 'audio' || fileData.type == 'video'&& (<img
+              src={"https://img.icons8.com/ios7/200/FFFFFF/youtube-play.png"}
+              alt={fileData.title}
+              className="h-64 w-64 object-cover"
+            />)}
           </div>
           <div className="flex flex-col flex-grow p-4">
             <h1 className="text-2xl font-bold mb-2">{fileData.title}</h1>
@@ -70,12 +78,12 @@ export default function View() {
           <video
             controls
             className="mt-4 w-full max-h-96 rounded-md"
-            src={fileData.thumbnail}
+            src={fileData.link}
           />
         )}
         {fileData.type === 'audio' && (
           <audio controls className="mt-4 w-full">
-            <source src={fileData.thumbnail} type="audio/mpeg" />
+            <source src={fileData.link} type="audio/mpeg" />
             Seu navegador não suporta o elemento de áudio.
           </audio>
         )}
