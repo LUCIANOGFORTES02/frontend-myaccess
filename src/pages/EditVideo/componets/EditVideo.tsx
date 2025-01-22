@@ -28,7 +28,7 @@ interface Video {
   description?: string;   // Descrição textual fornecida pelo usuário
   tags?: string[];        // Lista de palavras-chave ou rótulos atribuídos
   genre?: string;         // Categoria de gênero do vídeo
-
+  title?: string; 
 }
 
 
@@ -59,22 +59,21 @@ export default function EditVideo() {
 
   const [userDefinedProperties, setUserDefinedProperties] = useState<Video>(defaultVideo);
 
-      useEffect(()=>{
-          const loadMedia = async () =>{
-            try{
-              if (id){
-                const data = await mediaService.fetchMediaById(id);
-                setVideo(data);
-                setUserDefinedProperties(data);
-      
-              }
-            } catch (err) {
-              console.error("Erro ao carregar os dados da mídia.");
-            } 
-          };
-          loadMedia();
-      
-        },[id]);
+  useEffect(()=>{
+      const loadMedia = async () =>{
+        try{
+          if (id){
+            const data = await mediaService.fetchMediaById(id);
+            setVideo(data);
+            setUserDefinedProperties(data);
+          }
+        } catch (err) {
+          console.error("Erro ao carregar os dados da mídia.", err);
+        } 
+      };
+      loadMedia();
+  
+    },[id]);
 
   const handleChange = (field:keyof Video , value:any)=>{
     if(!userDefinedProperties)return;
@@ -84,134 +83,44 @@ export default function EditVideo() {
     }));
   };
 
+  const handleUpdate = async () => {
+    try{
+      if (id) {
+        const data = await mediaService.updateMediaById(id, {
+          title: userDefinedProperties.title,
+          description: userDefinedProperties.description,
+          tags: userDefinedProperties?.tags,
+        });
+
+        setVideo(data);
+        setUserDefinedProperties(data);
+      }
+    } catch (err) {
+      console.error("Erro ao atualizar os dados da mídia.", err);
+    } 
+  }
+
   return (
-    <div className="flex justify-center items-center  ">
-    <div className=' p-8 shadow-lg w-full max-w-4xl  '>
-      {/* Não pode ser alterados */}
-      <h2 className="text-2xl font-semibold"> Campos não editáveis</h2>
-      <hr className="border-gray-500 my-2" />
-      <div className=' grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 '>
-          <div className='md:col-span-2' >
-              <label htmlFor="" > Nome do Arquivo: </label>
-              <input
-                  type="text"
-                  value={video?.fileName || ""}
-                  readOnly
-                  className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-                />        
-          </div>
-          <div>
-              <label htmlFor=""> Tamanho do arquivo:</label>
-              <input
-                  type="text"
-                  value={`${video?.fileSize}. bytes` || ""}
-                  readOnly
-                  className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-                />
-          </div>
-          <div>
-              <label htmlFor="">Data de Upload:</label>
-              <input
-                  type="text"
-                  value={video?.uploadDate || ""}
-                  readOnly
-                className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-                />
-          </div>
-          <div>
-              <label htmlFor="">Tipo MINE:  </label>
-              <input
-                  type="text"
-                  value={video?.mimeType || ""}
-                  readOnly
-                  className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-                />
-          </div>
-          <div className='flex flex-col'>
-                  <label htmlFor="">Duração: </label>
-                  <input
-                  type="text"
-                  value={video?.duration || ""}
-                  readOnly
-                  className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-                /> 
-            </div>
-              <div>
-                  <label htmlFor="">Resolução: </label>
-                  <input
-                  type="text"
-                  value={video?.resolution || ""}
-                  readOnly
-                  className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-                />              
-
-          </div>
-          <div>
-              <label htmlFor=""> Taxa de quadros  </label>
-              <input
-                  type="text"
-                  value={video?.frameRate || ""}
-
-                  readOnly
-                  className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-                />
-          </div>
-          <div>
-              <label htmlFor=""> Codec de vídeo</label>
-              <input
-                  type="text"
-                  value={video?.videoCodec || ""}
-
-                  readOnly
-                  className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-                />
-
-          </div>
-          <div>
-              <label htmlFor=""> Codec de aúdio</label>
-              <input
-                  type="text"
-                  value={video?.audioCodec || ""}
-
-                  readOnly
-                  className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-                />
-
-          </div>
-          <div>
-              <label htmlFor=""> Taxa de bits</label>
-              <input
-                  type="text"
-                  value={video?.bitRate || ""}
-
-                  readOnly
-                  className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-                />
-
-          </div>
-          <div>
-              <label htmlFor=""> Thumbnail</label>
-              <input
-                  type="text"
-                  value={video?.thumbnail || ""}
-
-                  readOnly
-                  className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-                />
-
-          </div>
-          </div>
-          {/* Pode realizar edição */}
-
+    <div className="flex h-screen justify-center items-center  ">
+    <div className=' p-8 h-screen shadow-lg w-full max-w-4xl  '>
           <div className='flex flex-col gap-4 '>
             <h2 className='text-2xl font-semibold'>Propriedades Editáveis </h2>
             <hr />
 
-          
+            <div className='md:col-span-2' >
+              <label htmlFor="" > Nome do Arquivo: </label>
+              <input
+                  type="text"
+                  value={video?.title || video?.fileName || ""}
+                  readOnly
+                  className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
+                />        
+            </div>
             <div className=''>
                 <label htmlFor="description"> Descrição:  </label>
                 <textarea
                   value={userDefinedProperties.description || ""}
+                  placeholder="Adicione sua descrição"
                   name="description"
                   onChange={(e) => handleChange("description",e.target.value)}
                   className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
@@ -229,35 +138,17 @@ export default function EditVideo() {
 
             </div>
             <div>
-            <label htmlFor="">Gênero:</label>
-            <input
-              type="text"
-              value={userDefinedProperties.genre || ""}
-              onChange={(e) => handleChange("genre", e.target.value)}
-              className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
-            />
             </div>
             <div className="mt-4 flex  gap-4">
-              <button className="py-2 px-6 bg-green-600 hover:bg-green-500 text-white rounded-md">
-              Salvar
+              <button 
+              className="py-2 px-6 bg-green-600 hover:bg-green-500 text-white rounded-md"
+              onClick={async () => await handleUpdate() }
+              >
+                Salvar
               </button>
-      
             </div>
         </div>
-        {/* Exibição da miniatura */}
-          <div className="mt-8">
-            <h2 className="text-2xl font-semibold">Miniatura Gerada</h2>
-            <div className="mt-4">
-              <img
-                src={video?.thumbnail || ""}
-                alt="Miniatura do vídeo"
-                className="w-48 h-48 rounded-md object-cover border border-gray-600"
-              />
-            </div>
-          </div>
-    
       </div>
-      
     </div>
   )
 }

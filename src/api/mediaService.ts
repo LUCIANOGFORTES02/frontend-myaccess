@@ -49,7 +49,7 @@ export const mediaService = {
         throw error;
       }
     },
-    deleteMediaById: async ( id:string )=>{ //Buscar a mídia pelo ide
+    deleteMediaById: async ( id:string )=> { 
       try {
           const token = localStorage.getItem('userKey');
           const response = await api.delete(`api/media/${id}`,{
@@ -60,7 +60,26 @@ export const mediaService = {
           return response.data;        
       } catch (error) {
           console.error("Erro ao deletar a mídia:", error);
-          throw error; // Lança o erro para ser tratado no componente
+          throw error;
+      }
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    updateMediaById: async (mediaId: string, updatedData: any) =>{
+      try {
+          const token = localStorage.getItem("userKey");
+
+          const response = await api.patch(`api/media/${mediaId}`, updatedData, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          });
+
+          console.log(updatedData);
+
+          return response.data; 
+        } catch (error) {
+          console.error("Erro ao buscar atualizar a mídia:", error);
+          throw error;
         }
-  },
+    },
 }
