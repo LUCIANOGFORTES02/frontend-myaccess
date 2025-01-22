@@ -84,13 +84,6 @@ export default function EditVideo() {
     }));
   };
 
-  const handleSave = () => {
-    if (userDefinedProperties){
-      setVideo(userDefinedProperties)
-      
-    }
-  }
-
   return (
     <div className="flex justify-center items-center  ">
     <div className=' p-8 shadow-lg w-full max-w-4xl  '>
