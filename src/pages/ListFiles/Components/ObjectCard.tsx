@@ -33,10 +33,6 @@ export default function ObjectCard ({data} : ObjectCardProps) {
       }
     };
 
-  const handleView = () => {
-    navigate(`/view/${data.id}`); // Navega para a página de visualização
-  };
-
   const deleteMedia = async (mediaId: string) => {
     await mediaService.deleteMediaById(mediaId);
 

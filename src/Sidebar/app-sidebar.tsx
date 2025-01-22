@@ -1,4 +1,4 @@
-import { FileVideo , Home, FileAudio , Images } from "lucide-react"
+import { Home } from "lucide-react"
 import { Upload,Files } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage, } from "@/components/ui/avatar"
 import { Separator ,} from "@/components/ui/separator"

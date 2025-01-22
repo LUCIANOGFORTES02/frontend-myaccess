@@ -1,5 +1,4 @@
 import { mediaService } from "@/api/mediaService";
-import { Target } from "lucide-react";
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
 

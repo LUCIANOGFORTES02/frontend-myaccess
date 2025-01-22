@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button';
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { mediaService } from '@/api/mediaService';
-import React from 'react'
 
 interface FileDetailsData {
     id: string;

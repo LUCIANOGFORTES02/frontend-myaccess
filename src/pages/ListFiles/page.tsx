@@ -6,15 +6,6 @@ import { useEffect, useState } from 'react';
 import ObjectList from './Components/ObjectList';
 import { mediaService } from '@/api/mediaService';
 
-interface MediaItem {
-  id: string;
-  thumbnail: string;
-  title: string;
-  type: string;
-  description: string;
-  tags: string;
-}
-
 export default function ListFilesPage() {
     const[filters, setFilters]=useState({name:'',type:'',tags:''})
     const [data, setData] = useState<any[]>([]);
