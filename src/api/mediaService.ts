@@ -15,16 +15,16 @@ export const mediaService = {
             throw error; // Lança o erro para ser tratado no componente
           }
     },
-    fetchAllMedia: async (type="", page=1, limit =10) =>{
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    fetchAllMedia: async (filters: any, page = 1, limit = 10) =>{
         try {
             const token = localStorage.getItem("userKey");
-            const params: any = { page, limit };
-            if (type) params.type = type; // Adiciona o filtro de tipo se fornecido
-            const response = await api.get(`api/media`, {
+
+            const response = await api.get(`api/media/search`, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
-              params, // Suporte para paginação (opcional)
+              params: {...filters, page, limit}, // Suporte para paginação (opcional)
             });
             console.log(response)
             return response.data || { data: [], total: 0 }; // Retorna o formato esperado
@@ -51,7 +51,6 @@ export const mediaService = {
     },
     deleteMediaById: async ( id:string )=>{ //Buscar a mídia pelo ide
       try {
-          console.log(id);
           const token = localStorage.getItem('userKey');
           const response = await api.delete(`api/media/${id}`,{
               headers:{

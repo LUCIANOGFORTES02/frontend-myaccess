@@ -29,7 +29,22 @@ export default function ListFilesPage() {
         setLoading(true);
         setError(null);
         try {
-          const result = await mediaService.fetchAllMedia(filters.type, page, 10);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const params: any = {};
+
+          if (filters.type != '') {
+            params.type = filters.type
+          }
+
+          if (filters.name != '') {
+            params.title = filters.name
+          }
+
+          if (filters.tags != '') {
+            params.tags = filters.tags
+          }
+
+          const result = await mediaService.fetchAllMedia(params, page, 10);
   
           if (Array.isArray(result.medias)) {
             setData((prev) => {
@@ -53,7 +68,7 @@ export default function ListFilesPage() {
       };
   
       fetchMedia();
-    }, [filters.type, page]);
+    }, [filters.name, filters.tags, filters.type, page]);
   
 
     //Filtrar os dados

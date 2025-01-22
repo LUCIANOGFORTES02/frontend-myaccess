@@ -8,10 +8,10 @@ interface ObjectListProps {
     thumbnail: string; // URL da miniatura (imagem/vídeo)
     type:string;
     title: string; 
+    link: string;
     description: string; 
     tags: string; 
   }[];
-  
 }
 
 
