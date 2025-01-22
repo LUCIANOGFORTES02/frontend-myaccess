@@ -59,8 +59,14 @@ export default function View() {
               className="h-64 w-64 object-cover"
             />)}
 
-            {fileData.type == 'audio' || fileData.type == 'video'&& (<img
+            {fileData.type == 'video' && (<img
               src={"https://img.icons8.com/ios7/200/FFFFFF/youtube-play.png"}
+              alt={fileData.title}
+              className="h-64 w-64 object-cover"
+            />)}
+
+            {fileData.type == 'audio' && (<img
+              src={"https://www.nicepng.com/png/full/119-1199109_reversetune-com-audio-wave-white-icon-png.png"}
               alt={fileData.title}
               className="h-64 w-64 object-cover"
             />)}

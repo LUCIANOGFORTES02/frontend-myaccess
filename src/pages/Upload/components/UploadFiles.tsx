@@ -30,9 +30,10 @@ export default function UploadArea() {
 
   //Executada quando os arquivos são selecionados
   const handleFileSelect =async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const supportedFormats = ["image/jpeg", "image/png", "video/mp4", "audio/mp3, image/svg", "video/avi", "video/mov", "audio/wav"];
+    const supportedFormats = ["image/jpeg", "image/png", "audio/mpeg", "video/mp4", "audio/mp3, image/svg", "video/avi", "video/mov", "audio/wav"];
     const files = Array.from(e.target.files || []);
-    for(const file of files){
+    for(const file of files) {
+      console.log(file.type)
       if (!supportedFormats.includes(file.type)) {
         alert(`${file.name} não é um formato suportado.`);
         continue;

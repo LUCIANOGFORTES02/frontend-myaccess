@@ -12,7 +12,8 @@ interface Audio {
   sampleRate: number,
   channels: string,
   description: string,
-  tags: string[],
+  title: string,
+  tags: string,
   genre: string,
 };
 
@@ -31,7 +32,8 @@ export default function EditAudio() {
         sampleRate: 0,
         channels: '',
         description: '',
-        tags: [],
+        title: '',
+        tags: '',
         genre: '',
       };
     
@@ -49,7 +51,7 @@ export default function EditAudio() {
     
             }
           } catch (err) {
-            console.error("Erro ao carregar os dados da mídia.");
+            console.error("Erro ao carregar os dados da mídia.", err);
           } 
         };
         loadMedia();
@@ -64,103 +66,44 @@ export default function EditAudio() {
         }));
       };
 
-      const handleSave = () => {
-        if (userDefinedProperties){
-          setAudio(userDefinedProperties)
-          
-        }
+      const handleUpdate = async () => {
+        try{
+          if (id) {
+            const data = await mediaService.updateMediaById(id, {
+              title: userDefinedProperties.title,
+              description: userDefinedProperties.description,
+              tags: userDefinedProperties?.tags?.toString(),
+            });
+    
+            setAudio(data);
+            setUserDefinedProperties(data);
+          }
+        } catch (err) {
+          console.error("Erro ao atualizar os dados da mídia.", err);
+        } 
       }
 
   return (
-     <div className="flex justify-center items-center">
-      <div className='p-6 w-full max-w-4xl'>
-        {/* Não pode ser alterados */}
-        <h2 className="text-2xl font-semibold">Campos Não Editáveis</h2>
-        <hr className="border-gray-500 my-2" />
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-4 mb-8'>
-          <div className='md:col-span-2'>
-            <label htmlFor="">Nome do Arquivo:</label>
-            <input
-              type="text"
-              value={audio?.name || ''}
-              readOnly
-              className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label htmlFor="">Tamanho do Arquivo:</label>
-            <input
-              type="text"
-              value={`${audio?.size} bytes`|| ''}
-              readOnly
-              className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label htmlFor="">Data de Upload:</label>
-            <input
-              type="text"
-              value={audio?.uploadDate || ''}
-              readOnly
-              className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label htmlFor="">Tipo MIME:</label>
-            <input
-              type="text"
-              value={audio?.mimeType || ''}
-              readOnly
-              className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label htmlFor="">Duração:</label>
-            <input
-              type="text"
-              value={`${audio?.duration || ''} segundos`}
-              readOnly
-              className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label htmlFor="">Taxa de Bits:</label>
-            <input
-              type="text"
-              value={`${audio?.bitRate} kbps` || ''}
-              readOnly
-              className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label htmlFor="">Taxa de Amostragem:</label>
-            <input
-              type="text"
-              value={`${audio?.sampleRate} Hz` || ''}
-              readOnly
-              className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label htmlFor="">Canais:</label>
-            <input
-              type="text"
-              value={audio?.channels || ''}
-              readOnly
-              className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
-            />
-          </div>
-        </div>
-
-        {/* Pode realizar edição */}
+     <div className="flex h-screen justify-center items-center">
+      <div className='p-6 h-screen w-full max-w-4xl'>
         <div className='flex flex-col gap-4'>
           <h2 className='text-2xl font-semibold'>Propriedades Editáveis</h2>
           <hr />
 
+          <div className='md:col-span-2'>
+            <label htmlFor="">Nome do Arquivo:</label>
+            <input
+              type="text"
+              value={audio?.title || ''}
+              readOnly
+              className="w-full p-2 rounded-md bg-gray-600 text-gray-300 focus:outline-none"
+            />
+          </div>
           <div>
             <label htmlFor="">Descrição:</label>
             <textarea
               value={userDefinedProperties?.description || ''}
+              placeholder="Adicione sua descrição"
               onChange={(e) => handleChange("description", e.target.value)}
               className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
             />
@@ -170,22 +113,16 @@ export default function EditAudio() {
             <input
               type="text"
               placeholder="Adicione tags separadas por vírgula"
-              value={Array.isArray(userDefinedProperties?.tags) ? userDefinedProperties.tags.join(", ") : ''}
+              value={userDefinedProperties?.tags}
               onChange={(e) => handleChange("tags", e.target.value.split(","))}
               className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
             />
           </div>
-          <div>
-            <label htmlFor="">Gênero:</label>
-            <input
-              type="text"
-              value={userDefinedProperties?.genre || ''}
-              onChange={(e) => handleChange("genre", e.target.value)}
-              className="w-full p-2 rounded-md bg-gray-700 text-foreground focus:outline-none"
-            />
-          </div>
           <div className="mt-4 flex gap-4">
-            <button onClick={handleSave} className="py-2 px-6 bg-green-600 hover:bg-green-500 text-white rounded-md">
+            <button 
+              className="py-2 px-6 bg-green-600 hover:bg-green-500 text-white rounded-md"
+              onClick={async () => await handleUpdate() }
+            >
               Salvar
             </button>
           </div>

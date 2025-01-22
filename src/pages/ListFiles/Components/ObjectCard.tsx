@@ -57,8 +57,14 @@ export default function ObjectCard ({data} : ObjectCardProps) {
               className="h-24 w-24 object-cover"
             />)}
 
-            {data.type == 'audio' || data.type == 'video'&& (<img
+            {data.type == 'video'&& (<img
               src={"https://img.icons8.com/ios7/200/FFFFFF/youtube-play.png"}
+              alt={data.title}
+              className="h-24 w-24 object-cover"
+            />)}
+
+            {data.type == 'audio' && (<img
+              src={"https://www.nicepng.com/png/full/119-1199109_reversetune-com-audio-wave-white-icon-png.png"}
               alt={data.title}
               className="h-24 w-24 object-cover"
             />)}
