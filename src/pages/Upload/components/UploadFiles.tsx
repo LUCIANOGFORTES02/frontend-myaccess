@@ -1,7 +1,10 @@
 import { CloudUpload } from 'lucide-react';
-import  { useRef, useState } from "react";
+import  { useRef, useState, useContext } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 import { UploadService } from '@/api/uploadService';
+import { mediaService } from '@/api/mediaService';
+import { AuthContext } from '../../../auth/AuthContext';
+import { User } from '../../../types/User';
 
 type UploadedFile = {
   title: string;
@@ -12,12 +15,9 @@ type UploadedFile = {
   thumbnail?: string;
 };
 
-
 export default function UploadArea() {
     const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
-
-
-  
+    const { user, saveUserInfos } = useContext(AuthContext)
 
   //Referência para o input de arquivos (usado para simular clique no input)
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -104,19 +104,31 @@ export default function UploadArea() {
 
   //Upload do arquivo
   const uploadFile = async (file: File, fileData: any) => {
+    let fileType = file.type;
+    if (fileType.includes('/')) {
+      fileType = file.type.split("/")[0];
+    }
+    
+    console.log(file)
     const UploadData = new FormData();
     UploadData.append("file", file);
     UploadData.append("title", fileData.title); // Usando o nome do arquivo como título inicial
     UploadData.append("description", ""); // Ajuste conforme necessário
     UploadData.append("tags", "");
-    UploadData.append("type", file.type); // Exemplo: "image", "video", "audio"
+    UploadData.append("type", fileType); // Exemplo: "image", "video", "audio"
     if (fileData.thumbnail) {
       UploadData.append("thumbnail", fileData.thumbnail);
     }
 
     try {
-      const response = await UploadService.uploadFile(UploadData);
-      console.log(response)
+      await UploadService.uploadFile(UploadData);
+
+      const mediaQuantity = await mediaService.getUserMediaCount();
+
+      saveUserInfos({
+        ...user,
+        media: mediaQuantity
+      } as User);
 
       setUploadedFiles((prev) =>
         prev.map((f) =>
