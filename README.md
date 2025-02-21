@@ -85,20 +85,23 @@ Estrutura basica do projeto:
 
 ```
 
-## Estrutura da Aplicação
-Páginas da aplicação:
-- Página de Cadastro
-  - Nome de usuário
-  - Email
-  - Senha
-- Página de Login
-  - Usuário
-  - Senha
-- Dashboard
-  - Visualização das mídias por categorias (Imagens, vídeos)
-  - Barra lateral com opções por categorias
-  - Perfil
-  - Logout
-- Página de Edição de Perfil
-  - Formulário com campos para edição
-  - Barra lateral com opções por categorias
+## Imagens da Aplicação
+
+> **Página de Cadastro**
+![Tela de Cadastro](src/assets/Tela_de_Cadastro.png)
+> **Página de Login**
+![Tela de Login](src/assets/Login.png)
+> **Dashboard**
+![Tela da Dashboard](src/assets/Tela_do_Dashboard.png)
+> **Página de Edição de Perfil**
+![Tela da Edição de perfil](src/assets/Tela_de_Edição_Perfil.png)
+
+> **Página de Upload**
+![Tela da Edição de perfil](src/assets/Tela_de_Upload.png)
+
+> **Página de Edição de mídia**
+![Tela da Edição de perfil](src/assets/Tela_Midia.png)
+
+
+> **Página de Listagem**
+![Tela da Edição de perfil](src/assets/Tela_de_Listagem.png)
